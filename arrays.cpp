@@ -788,19 +788,78 @@ public:
         }
         return longest;
     }
+
+    void SetMatrixZero(vector<vector<int>> matrix)
+    {
+
+        int m = matrix.size();
+        int n = matrix[0].size();
+
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (matrix[i][j] == 0)
+                {
+                    // mark all elements of this row as -1 except existing zeroes
+                    for (int col = 0; col < n; col++)
+                    {
+                        if (matrix[i][col] != 0)
+                        {
+                            matrix[i][col] = -1;
+                        }
+                    }
+                    // mark all elements of this col as -1 except existing zeroes
+                    for (int row = 0; row < m; row++)
+                    {
+                        if (matrix[row][j] != 0)
+                        {
+                            matrix[row][j] = -1;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Iterate thorugh the matrix and whoever is -1 set them to 0
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (matrix[i][j] == -1)
+                {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+
+        for (auto row : matrix)
+        {
+            for (auto val : row)
+            {
+                cout << val << " ";
+            }
+            cout << endl;
+        }
+    }
 };
 
 int main()
 {
-    int n;
-    cin >> n;
+    // int m;
+    // cin >> m;
+    // int n;
+    // cin >> n;
     // int k;
     // cin >> k;
-    vector<int> arr(n);
-    for (int i = 0; i < n; i++)
-    {
-        cin >> arr[i];
-    }
+    vector<vector<int>> matrix = {{1, 1, 1}, {1, 0, 1}, {1, 1, 1}};
+    // for (int i = 0; i < m; i++)
+    // {
+    //     for (int j = 0; j < n; j++)
+    //     {
+    //         cin >> matrix[i][j];
+    //     }
+    // }
 
     // vector<int> arr2(m);
     // for (int i = 0; i < m; i++)
@@ -808,13 +867,14 @@ int main()
     //     cin >> arr2[i];
     // }
     Solution obj;
-    int result = obj.LongestConsecutive(arr, n);
+    obj.SetMatrixZero(matrix);
+
     // for (int num : arr)
     // {
     //     cout << num << " ";
     // }
     // longestSubArraySum(arr, n);
-    cout << result;
+    // cout << result;
     // vector<int> Union = obj.FindUnion(arr1, arr2, m, n);
 
     // for (auto &it : Union)
