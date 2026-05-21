@@ -307,15 +307,73 @@ public:
     int sqrtOfANumber(int n)
     {
         // Brute Force
-        int ans;
-        for (int i = 0; i < n; i++)
+        // int ans;
+        // for (int i = 0; i < n; i++)
+        // {
+        //     if (i * i <= n)
+        //     {
+        //         ans = i;
+        //     }
+        // }
+        // return ans;
+
+        // Optimal Solution
+        int s = 1;
+        int e = n;
+        int ans = 0;
+        while (s <= e)
         {
-            if (i * i <= n)
+            int mid = s + ((e - s) / 2);
+            if (mid * mid <= n)
             {
-                ans = i;
+                ans = mid;
+
+                s = mid + 1;
+            }
+            else
+            {
+                e = mid - 1;
             }
         }
         return ans;
+    }
+
+    int NRootOfM(int n, int m)
+    {
+        // Brute Force
+        // for (int i = 1; i <= m; i++)
+        // {
+        //     int power = pow(i, n);
+
+        //     if (power == m)
+        //         return i;
+
+        //     if (power > m)
+        //         break;
+        // }
+        // return -1;
+
+        // Optimal Solution
+        int s = 1;
+        int e = m;
+
+        while (s <= e)
+        {
+            int mid = s + ((e - s) / 2);
+            int power = pow(mid, n);
+            if (power == m)
+                return mid;
+            if (power < m)
+            {
+
+                s = mid + 1;
+            }
+            else
+            {
+                e = mid - 1;
+            }
+        }
+        return -1;
     }
 };
 
@@ -323,6 +381,8 @@ int main()
 {
     int n;
     cin >> n;
+    int m;
+    cin >> m;
     // int t;
     // cin >> t;
     // vector<int> nums(n);
@@ -331,6 +391,6 @@ int main()
     //     cin >> nums[i];
     // }
     Solution solution;
-    int ans = solution.sqrtOfANumber(n);
+    int ans = solution.NRootOfM(n, m);
     cout << ans;
 }
