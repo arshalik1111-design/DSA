@@ -789,51 +789,80 @@ public:
         return longest;
     }
 
-    void SetMatrixZero(vector<vector<int>> matrix)
+    void SetMatrixZero(vector<vector<int>> mt)
     {
 
-        int m = matrix.size();
-        int n = matrix[0].size();
+        // Brute Force Approach
+        //  int m = mt.size();
+        //  int n = mt[0].size();
 
-        for (int i = 0; i < m; i++)
+        // for (int i = 0; i < m; i++)
+        // {
+        //     for (int j = 0; j < n; j++)
+        //     {
+        //         if (mt[i][j] == 0)
+        //         {
+        //             // mark all elements of this row as -1 except existing zeroes
+        //             for (int col = 0; col < n; col++)
+        //             {
+        //                 if (mt[i][col] != 0)
+        //                 {
+        //                     mt[i][col] = -1;
+        //                 }
+        //             }
+        //             // mark all elements of this col as -1 except existing zeroes
+        //             for (int row = 0; row < m; row++)
+        //             {
+        //                 if (mt[row][j] != 0)
+        //                 {
+        //                     mt[row][j] = -1;
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+
+        // // Iterate thorugh the mt and whoever is -1 set them to 0
+        // for (int i = 0; i < m; i++)
+        // {
+        //     for (int j = 0; j < n; j++)
+        //     {
+        //         if (mt[i][j] == -1)
+        //         {
+        //             mt[i][j] = 0;
+        //         }
+        //     }
+        // }
+
+        // Better Approach
+        int m = mt.size();
+        int n = mt[0].size();
+        vector<int> col(m, 0);
+        vector<int> row(n, 0);
+
+        for (int i = 0; i < n; i++)
         {
-            for (int j = 0; j < n; j++)
+            for (int j = 0; j < m; j++)
             {
-                if (matrix[i][j] == 0)
+                if (mt[i][j] == 0)
                 {
-                    // mark all elements of this row as -1 except existing zeroes
-                    for (int col = 0; col < n; col++)
-                    {
-                        if (matrix[i][col] != 0)
-                        {
-                            matrix[i][col] = -1;
-                        }
-                    }
-                    // mark all elements of this col as -1 except existing zeroes
-                    for (int row = 0; row < m; row++)
-                    {
-                        if (matrix[row][j] != 0)
-                        {
-                            matrix[row][j] = -1;
-                        }
-                    }
+                    row[i] = 1;
+                    col[j] = 1;
+                }
+            }
+        }
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                if (row[i] == 1 || col[j] == 1)
+                {
+                    mt[i][j] = 0;
                 }
             }
         }
 
-        // Iterate thorugh the matrix and whoever is -1 set them to 0
-        for (int i = 0; i < m; i++)
-        {
-            for (int j = 0; j < n; j++)
-            {
-                if (matrix[i][j] == -1)
-                {
-                    matrix[i][j] = 0;
-                }
-            }
-        }
-
-        for (auto row : matrix)
+        for (auto row : mt)
         {
             for (auto val : row)
             {
@@ -842,22 +871,224 @@ public:
             cout << endl;
         }
     }
+
+    vector<vector<int>> RotateMatrix(vector<vector<int>> mt)
+    {
+        // Brute Force
+
+        int n = mt.size();
+        // // vector<vector<int>> ans(n, vector<int>(n));
+
+        // for (int i = 0; i < n; i++)
+        // {
+        //     for (int j = 0; j < n; j++)
+        //     {
+        //         mt[j][n - i - 1] = mt[i][j];
+        //     }
+        // }
+
+        // return mt;
+
+        // Optimal Solution
+        // Transpose of the matrix
+        for (int i = 0; i < n; i++)
+
+        {
+            for (int j = i + 1; j < n; j++)
+            {
+                swap(mt[j][i], mt[i][j]);
+            }
+        }
+        for (int i = 0; i < n; i++)
+        {
+
+            reverse(mt[i].begin(), mt[i].end());
+        }
+
+        return mt;
+    }
+
+    void spiralMatrix(vector<vector<int>> &mt)
+    {
+        vector<int> result;
+        int top = 0;
+        int left = 0;
+        int right = mt[0].size() - 1;
+        int bottom = mt.size() - 1;
+
+        while (top <= bottom && left <= right)
+        {
+
+            // Traverse from left to right across the top row
+            for (int i = left; i <= right; i++)
+            {
+                result.push_back(mt[top][i]);
+            }
+            top++;
+            // Traverse from top to bottom on the right coloumn
+            for (int i = top; i <= bottom; i++)
+            {
+                result.push_back(mt[i][right]);
+            }
+            right--;
+            // Check if there are rows remianing
+            if (top <= bottom)
+            {
+                // Traverse from right to left on the bottom row
+                for (int i = right; i >= left; i--)
+                {
+                    result.push_back(mt[bottom][i]);
+                }
+                bottom--;
+            }
+        }
+        // Traverse from bottom to top
+        if (left <= right)
+        {
+            for (int i = bottom; i >= top; i--)
+            {
+                result.push_back(mt[i][left]);
+            }
+            left++;
+        }
+        for (auto it : result)
+        {
+            cout << it << " ";
+        }
+    }
+
+    long long findPascalElement(int r, int c)
+    {
+        // Problem1
+        // Given row and coloumn tell the element at that place
+        int n = r - 1;
+        int k = c - 1;
+        int result = 1;
+
+        for (int i = 0; i < k; i++)
+        {
+            result *= (n - i);
+            result /= i + 1;
+        }
+
+        return result;
+    }
+
+    vector<vector<int>> PascalsTriangle(int numRows)
+    {
+        vector<vector<int>> triangle;
+        for (int i = 0; i < numRows; i++)
+        {
+            vector<int> row(i + 1, 1);
+            for (int j = 1; j < i; j++)
+            {
+                row[j] = triangle[i - 1][j - 1] + triangle[i - 1][j];
+            }
+
+            triangle.push_back(row);
+        }
+
+        return triangle;
+    }
+
+    void majorityElementTwo(vector<int> nums)
+    {
+        // Brute Force
+        // Empty List
+        int n = nums.size();
+        vector<int> ans;
+
+        for (int i = 0; i < n; i++)
+        {
+            int cnt = 0;
+
+            if (ans.size() == 0 || ans[0] != nums[i])
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (nums[j] == nums[i])
+                    {
+                        cnt++;
+                    }
+                    if (cnt > (n / 3))
+                    {
+                        ans.push_back(nums[i]);
+                    }
+                }
+                if (ans.size() == 2)
+                {
+                    break;
+                }
+            }
+        }
+        for (auto it : ans)
+        {
+            cout << it << " ";
+        }
+        // Better Solution
+        // Optimal Solution
+    }
+
+    vector<vector<int>> threeSum(vector<int> nums)
+    {
+        // Brute Force
+        int n = nums.size();
+        set<vector<int>> st;
+
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = i + 1; j < n; j++)
+            {
+                for (int k = j + 1; k < n; k++)
+                {
+                    if (nums[i] + nums[j] + nums[k] == 0)
+                    {
+                        vector<int> temp = {nums[i], nums[j], nums[k]};
+                        sort(temp.begin(), temp.end());
+                        st.insert(temp);
+                    }
+                }
+            }
+        }
+
+        vector<vector<int>> ans(st.begin(), st.end());
+        return ans;
+        // Better Solution
+    }
+
+    int searchSingleElement(vector<int> nums, int n)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            if ((i + 1) != i)
+            {
+                return (i + 1);
+            }
+        }
+    }
 };
 
 int main()
 {
     // int m;
     // cin >> m;
-    // int n;
-    // cin >> n;
+    int n;
+    cin >> n;
+    vector<int> nums;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> nums[i];
+    }
     // int k;
     // cin >> k;
-    vector<vector<int>> matrix = {{1, 1, 1}, {1, 0, 1}, {1, 1, 1}};
+    // vector<vector<int>> mt = {{1, 2, 3},
+    //                           {4, 5, 6},
+    //                           {7, 8, 9}};
     // for (int i = 0; i < m; i++)
     // {
     //     for (int j = 0; j < n; j++)
     //     {
-    //         cin >> matrix[i][j];
+    //         cin >> mt[i][j];
     //     }
     // }
 
@@ -867,8 +1098,28 @@ int main()
     //     cin >> arr2[i];
     // }
     Solution obj;
-    obj.SetMatrixZero(matrix);
 
+    // vector<vector<int>> res = obj.threeSum(nums);
+    // for (auto &it : res)
+    // {
+    //     for (auto &num : it)
+    //     {ṇ
+    //         cout << num << " ";
+    //     }
+    //     cout << endl;
+    // }
+
+    int r = obj.searchSingleElement(nums, n);
+    cout << r << " ";
+    // vector<vector<int>> rotated = obj.RotateMatrix(mt);
+    // for (auto it : rotated)
+    // {
+    //     for (auto val : it)
+    //     {
+    //         cout << val << " ";
+    //     }
+    //     cout << endl;
+    // }
     // for (int num : arr)
     // {
     //     cout << num << " ";
