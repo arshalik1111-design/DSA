@@ -338,7 +338,7 @@ public:
         return ans;
     }
 
-    int NRootOfM(int n, int m)
+    long long NRootOfM(int n, int m)
     {
         // Brute Force
         // for (int i = 1; i <= m; i++)
@@ -360,7 +360,7 @@ public:
         while (s <= e)
         {
             int mid = s + ((e - s) / 2);
-            int power = pow(mid, n);
+            long long power = pow(mid, n);
             if (power == m)
                 return mid;
             if (power < m)
@@ -391,6 +391,6 @@ int main()
     //     cin >> nums[i];
     // }
     Solution solution;
-    int ans = solution.NRootOfM(n, m);
+    long long ans = solution.NRootOfM(n, m);
     cout << ans;
 }
