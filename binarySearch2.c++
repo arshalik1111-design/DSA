@@ -136,6 +136,200 @@ public:
 
         return s;
     }
+
+    int daysNeeded(vector<int> nums, int capacity)
+    {
+        int days = 1;
+        int currentLoad = 0;
+        for (int weight : nums)
+        {
+            if (currentLoad + weight > capacity)
+            {
+                days++;
+                currentLoad = weight;
+            }
+            else
+            {
+                currentLoad += weight;
+            }
+        }
+        return days;
+    }
+    int capacityToShipPackages(int n, vector<int> weights, int days)
+    {
+        int maxCapacity = accumulate(weights.begin(), weights.end(), 0);
+
+        int minCapacity = *max_element(weights.begin(), weights.end());
+        // for (int i = minCapacity; i <= maxCapacity; i++)
+        // {
+        //     if (daysNeeded(weights, i) <= days)
+        //     {
+        //         return i;
+        //     }
+        // }
+        // return maxCapacity;
+
+        int s = minCapacity;
+        int e = maxCapacity;
+        while (s <= e)
+        {
+            int mid = s + (e - s) / 2;
+            if (daysNeeded(weights, mid) <= days)
+            {
+                e = mid;
+            }
+            else
+            {
+                s = mid + 1;
+            }
+        }
+        return s;
+    }
+
+    int KthMissingNumber(int n, vector<int> vec, int k)
+    {
+        // Brute Force
+        // for (int i = 0; i < n; i++)
+        // {
+        //     if (vec[i] <= k)
+        //     {
+        //         k++;
+        //     }
+        //     else
+        //     {
+        //         break;
+        //     }
+        // }
+        // return k;
+
+        // Optimal solution
+        int s = 0;
+        int e = n - 1;
+        while (s <= e)
+        {
+            int mid = s + (e - s / 2);
+            int count = 0;
+
+            int valuesMissing = vec[mid] - (mid + 1);
+
+            if (valuesMissing < k)
+            {
+
+                s = mid + 1;
+            }
+            else
+            {
+                e = mid - 1;
+            }
+        }
+        return e + k + 1;
+    }
+
+    bool canWePlace(vector<int> stalls, int d, int cows)
+    {
+        int cntCows = 1;
+        int lastPlacedCow = stalls[0];
+        for (int stall : stalls)
+        {
+            if (stall - lastPlacedCow >= d)
+            {
+                cntCows++;
+                lastPlacedCow = stall;
+            }
+            if (cntCows >= cows)
+                return true;
+        }
+        return false;
+    }
+    int aggressiveCows(int n, vector<int> stalls, int cows)
+    {
+
+        sort(stalls.begin(), stalls.end());
+        int maxDist = stalls[n - 1] - stalls[0];
+        int ans = 0;
+        // Brute Force
+        // for (int d = 1; d <= maxDist; d++)
+        // {
+        //     if (canWePlace(stalls, d, cows))
+        //     {
+        //         ans = d;
+        //     }
+        // }
+        // return ans;
+        // Optimal
+        int s = 1;
+        int e = n - 1;
+        while (s <= e)
+        {
+            int mid = s + (e - s) / 2;
+            if (canWePlace(stalls, mid, cows))
+            {
+                ans = mid;
+                s = mid + 1;
+            }
+            else
+            {
+                e = mid - 1;
+            }
+        }
+        return ans;
+    }
+
+    int countStudents(vector<int> arr, int page)
+    {
+        int cntStudent = 1;
+
+        int pagesStudent = 0;
+        for (int p : arr)
+        {
+            if (p + pagesStudent <= page)
+            {
+                pagesStudent += p;
+            }
+            else
+
+            {
+                cntStudent++;
+                pagesStudent = p;
+            }
+        }
+        return cntStudent;
+    }
+    int bookAllocation(int n, vector<int> arr, int s)
+    {
+        if (s > n)
+            return -1;
+        int maxPages = *max_element(arr.begin(), arr.end());
+        int sumOfAllPages = accumulate(arr.begin(), arr.end(), 0);
+
+        // Brute Force
+        // for (int page = maxPages; page <= sumOfAllPages; page++)
+        // {
+        //     if (countStudents(arr, page) == s)
+        //         return page;
+        // }
+        // return maxPages;
+
+        // Optimal Aprroach
+        int low = maxPages;
+        int high = sumOfAllPages;
+        int ans = 0;
+        while (low <= high)
+        {
+            int mid = low + (high - low) / 2;
+            if (countStudents(arr, mid) <= s)
+            {
+                ans = mid;
+                high = mid - 1;
+            }
+
+            else
+            {
+                low = mid + 1;
+            }
+        }
+        return ans;
+    }
 };
 int main()
 {
@@ -147,14 +341,14 @@ int main()
     {
         cin >> nums[i];
     }
-    int th;
-    cin >> th;
+    int s;
+    cin >> s;
 
-    // int k;
-    // cin >> k;
+    // int s;
+    // cin >> s;
     // int h;
     // cin >> h;
     Solution solution;
-    int ans = solution.smallestDivisor(n, nums, th);
+    int ans = solution.bookAllocation(n, nums, s);
     cout << ans;
 }
