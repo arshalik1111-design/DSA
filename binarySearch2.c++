@@ -4,7 +4,7 @@ using namespace std;
 class Solution
 {
 public:
-    int calculateTotalHours(int n, vector<int> &piles, int hourly)
+    int calculateTotalHours(vector<int> &piles, int hourly)
     {
 
         int totalHours = 0;
@@ -28,24 +28,23 @@ public:
         // }
         int s = 1;
         int e = maxPile;
+        int ans = 0;
         while (s <= e)
         {
             int mid = s + ((e - s) / 2);
-            int totalTime = calculateTotalHours(n, piles, mid);
-            if (totalTime == h)
+            int totalTime = ;
+            if (calculateTotalHours(piles, mid) <= h)
             {
-                return mid;
-            }
-            else if (totalTime < h)
-            {
+                ans = mid;
                 e = mid - 1;
             }
+
             else
             {
                 s = mid + 1;
             }
         }
-        return -1;
+        return ans;
     }
 
     bool isPossilbe(vector<int> bloomDays, long long day, long long m, long long k)
