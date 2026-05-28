@@ -330,25 +330,101 @@ public:
         }
         return ans;
     }
+
+    int countK(vector<int> arr, int range)
+    {
+        int cnt = 1;
+        int sum = 0;
+        for (int num : arr)
+        {
+            if (sum + num <= range)
+            {
+                sum += num;
+            }
+            else
+            {
+                cnt++;
+                sum = num;
+            }
+        }
+        return cnt;
+    }
+    int splitArray(int n, vector<int> arr, int k)
+    {
+        int maxElement = *max_element(arr.begin(), arr.end());
+        int sumOfAllElements = accumulate(arr.begin(), arr.end(), 0);
+        // Brute Force
+        // for (int i = maxElement; i <= sumOfAllElements; i++)
+        // {
+        //     if (countK(arr, i) == k)
+        //     {
+        //         return i;
+        //     }
+        // }
+        // return maxElement;
+
+        // Optiaml
+        int s = maxElement;
+        int e = sumOfAllElements;
+        int ans = 0;
+        while (s <= e)
+        {
+            int mid = s + (e - s) / 2;
+            if (countK(arr, mid) <= k)
+            {
+                ans = mid;
+                e = mid - 1;
+            }
+            else
+            {
+                s = mid + 1;
+            }
+        }
+        return ans;
+    }
+
+    void MedianOfTwoSortedArrays(vector<int> &nums1, vector<int> &nums2)
+    {
+        int n1 = nums1.size();
+        int n2 = nums2.size();
+        vector<int> temp;
+        for (int i = 0; i < n2; i++)
+        {
+            nums2[i] = temp[i];
+        }
+        for (int i = 0; i < n1 + n2; i++)
+        {
+            nums1[i + n1] = temp[i];
+        }
+        for (auto it : nums1)
+        {
+            cout << it << " ";
+        }
+    }
 };
 int main()
 {
-    int n;
-    cin >> n;
+    int n1;
+    cin >> n1;
 
-    vector<int> nums(n);
-    for (int i = 0; i < n; i++)
+    vector<int> nums1(n1);
+    for (int i = 0; i < n1; i++)
     {
-        cin >> nums[i];
+        cin >> nums1[i];
     }
-    int s;
-    cin >> s;
+    int n2;
+    cin >> n2;
+    vector<int> nums2(n2);
+    for (int i = 0; i < n2; i++)
+    {
+        cin >> nums2[i];
+    }
+    // int k;
+    // cin >> k;
 
-    // int s;
-    // cin >> s;
     // int h;
     // cin >> h;
     Solution solution;
-    int ans = solution.bookAllocation(n, nums, s);
-    cout << ans;
+    solution.MedianOfTwoSortedArrays(nums1, nums2);
+    // cout << ans;
 }
