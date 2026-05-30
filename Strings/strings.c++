@@ -111,6 +111,12 @@ public:
         }
         return ans;
     }
+
+    bool isomorphicStrings(string s, string t)
+    {
+        int m1 = {256};
+        int m2 = {256};
+    }
 };
 
 int main()
