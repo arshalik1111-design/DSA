@@ -32,7 +32,6 @@ public:
         while (s <= e)
         {
             int mid = s + ((e - s) / 2);
-            int totalTime = ;
             if (calculateTotalHours(piles, mid) <= h)
             {
                 ans = mid;
