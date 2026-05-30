@@ -91,15 +91,41 @@ public:
             i++;
         return s.substr(i, idx - i + 1);
     }
+
+    string longestCommonPrefix(vector<string> &s)
+    {
+        if (s.empty())
+            return "";
+        sort(s.begin(), s.end());
+        string s1 = s[0];
+        string s2 = s[s.size() - 1];
+        string ans = "";
+        int minlength = min(s1.size(), s2.size());
+        for (int i = 0; i < minlength; i++)
+        {
+            if (s1[i] != s2[i])
+            {
+                break;
+            }
+            ans += s1[i];
+        }
+        return ans;
+    }
 };
 
 int main()
 {
+    int n;
+    cin >> n;
+    vector<string> s(n);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> s[i];
+    }
 
-    string s;
-    cin >> s;
+    Solution solution;
 
-    Solution obj;
-    string ans = obj.largestOddNumber(s);
+    string ans = solution.longestCommonPrefix(s);
     cout << ans;
+    return 0;
 }
