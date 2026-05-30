@@ -114,24 +114,45 @@ public:
 
     bool isomorphicStrings(string s, string t)
     {
-        int m1 = {256};
-        int m2 = {256};
+        unordered_map<char, int> charIndexS;
+        unordered_map<char, int> charIndexT;
+
+        for (int i = 0; i < s.length(); i++)
+        {
+            if (charIndexS.find(s[i]) == charIndexS.end())
+            {
+                charIndexS[s[i]] = i;
+            }
+            if (charIndexT.find(t[i]) == charIndexT.end())
+            {
+                charIndexT[t[i]] = i;
+            }
+            if (charIndexS[s[i]] != charIndexT[t[i]])
+            {
+                return false;
+            }
+        }
+        return true;
     }
 };
 
 int main()
 {
-    int n;
-    cin >> n;
-    vector<string> s(n);
-    for (int i = 0; i < n; i++)
-    {
-        cin >> s[i];
-    }
+    // int n;
+    // cin >> n;
+    // vector<string> s(n);
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cin >> s[i];
+    // }
+    string s;
+    cin >> s;
+    string t;
+    cin >> t;
 
     Solution solution;
 
-    string ans = solution.longestCommonPrefix(s);
+    bool ans = solution.isomorphicStrings(s, t);
     cout << ans;
-    return 0;
+    // return 0;
 }
