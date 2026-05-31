@@ -140,14 +140,22 @@ public:
 
         if (s.length() != g.length())
             return false;
-        for (int i = 0; i < s.length(); i++)
-        {
-            if (s.substr(i) + s.substr(0, i) == g)
-            {
-                return true;
-            }
-        }
-        return false;
+        // for (int i = 0; i < s.length(); i++)
+        // {
+        //     if (s.substr(i) + s.substr(0, i) == g)
+        //     {
+        //         return true;
+        //     }
+        // }
+        // return false;
+
+        // Optimal
+        string doubledS = s + s;
+        return doubledS.find(g) != string::npos;
+    }
+
+    bool validAnagram(string s, string t)
+    {
     }
 };
 
