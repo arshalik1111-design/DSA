@@ -134,6 +134,21 @@ public:
         }
         return true;
     }
+
+    bool checkRotation(string s, string g)
+    {
+
+        if (s.length() != g.length())
+            return false;
+        for (int i = 0; i < s.length(); i++)
+        {
+            if (s.substr(i) + s.substr(0, i) == g)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 };
 
 int main()
@@ -147,12 +162,12 @@ int main()
     // }
     string s;
     cin >> s;
-    string t;
-    cin >> t;
+    string g;
+    cin >> g;
 
     Solution solution;
 
-    bool ans = solution.isomorphicStrings(s, t);
+    bool ans = solution.checkRotation(s, g);
     cout << ans;
     // return 0;
 }
