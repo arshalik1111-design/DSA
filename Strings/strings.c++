@@ -3,6 +3,16 @@ using namespace std;
 
 class Solution
 {
+private:
+    static bool comparator(pair<int, char> p1, pair<int, char> p2)
+    {
+        if (p1.first > p2.first)
+            return true;
+        if (p1.first < p2.first)
+            return false;
+        return p1.second < p2.second;
+    }
+
 public:
     string removeOuterMostParenthesis(string s)
     {
@@ -158,8 +168,8 @@ public:
     {
         if (s.length() != t.length())
             return false;
-        sort(s.begin(), s.end());
-        sort(t.begin(), t.end());
+        // sort(s.begin(), s.end());
+        // sort(t.begin(), t.end());
         // Brute Force
         // for (int i = 0; i < s.length(); i++)
         // {
@@ -187,6 +197,31 @@ public:
         }
         return true;
     }
+
+    string frequencySort(string s)
+    {
+        int n = s.length();
+
+        // Frequency map to count frequency of character .
+        unordered_map<char, int> count;
+        for (char ch : s)
+        {
+            count[ch]++;
+        }
+        // Initialize frequency array to store characters and frequency in the array
+        vector<pair<int, char>> freq;
+        for (auto &it : count)
+        {
+            freq.push_back({it.second, it.first});
+        }
+        sort(begin(freq), end(freq), comparator);
+        string ans = "";
+        for (auto &p : freq)
+        {
+            ans.append(p.first, p.second);
+        }
+        return ans;
+    }
 };
 
 int main()
@@ -200,12 +235,12 @@ int main()
     // }
     string s;
     cin >> s;
-    string g;
-    cin >> g;
+    // string g;
+    // cin >> g;
 
     Solution solution;
 
-    bool ans = solution.validAnagram(s, g);
+    string ans = solution.frequencySort(s);
     cout << ans;
     // return 0;
 }
