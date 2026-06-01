@@ -222,6 +222,25 @@ public:
         }
         return ans;
     }
+    // 1614. Maximum Nesting Depth of the Parentheses
+    int maxDepth(string s)
+    {
+        int count = 0;
+        int ans = 0;
+        for (char ch : s)
+        {
+            if (ch == '(')
+            {
+                count++;
+                ans = max(ans, count);
+            }
+            else if (ch == ')')
+            {
+                count--;
+            }
+        }
+        return ans;
+    }
 };
 
 int main()
@@ -240,7 +259,7 @@ int main()
 
     Solution solution;
 
-    string ans = solution.frequencySort(s);
+    int ans = solution.maxDepth(s);
     cout << ans;
     // return 0;
 }
