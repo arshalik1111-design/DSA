@@ -241,7 +241,7 @@ public:
         }
         return ans;
     }
-
+    // 13. Roman to Integer
     int roamnToInt(string s)
     {
 
@@ -269,24 +269,30 @@ public:
         }
         return sum + roman[s.back()];
     }
-
-    string intToRoman(int num)
+    // 8. String to Integer (atoi)
+    int myAtoi(string s)
     {
         string ans = "";
-        unordered_map<char, int> roman = {
-            {'I', 1},
-            {'V', 5},
-            {'X', 10},
-            {'L', 50},
-            {'C', 100},
-            {'D', 500},
-            {'M', 1000}};
-
-        if (num)
-        // for (int i = 0; i < num.size(); i++)
-        // {
-
-        // }
+        for (int i = 0; i < s.length(); i++)
+        {
+            if (s[i] == ' ' || s[i] == '0')
+                continue;
+            if (isalpha(s[i]))
+                continue;
+            if (s[i] == '-' || s[i] == '+')
+                ans.push_back(s[i]);
+            else
+            {
+                if (isalpha(s[i]))
+                    continue;
+                else
+                    ans.push_back(s[i]);
+            }
+        }
+        return stoi(ans);
+    }
+    int countSubstrings(string s)
+    {
     }
 };
 
@@ -306,7 +312,7 @@ int main()
 
     Solution solution;
 
-    int ans = solution.roamnToInt(s);
+    int ans = solution.myAtoi(s);
     cout << ans;
     // return 0;
 }
