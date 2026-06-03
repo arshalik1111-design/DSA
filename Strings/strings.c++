@@ -270,29 +270,52 @@ public:
         return sum + roman[s.back()];
     }
     // 8. String to Integer (atoi)
-    int myAtoi(string s)
+    // We'll solve this problem using recursion, we keep on running the loop till we reach the end of the array or a non-digit is encounter
+
+    // const int INT_MIN_VAL = -2147483648;
+    // const int INT_MAX_VAL = 2147483647;
+    // int helper(string s, int i, int num, int sign)
+    // {
+    //     if (i >= s.size() && !isdigit(s[i]))
+    //         return (int)(sign * num);
+    // }
+    // int myAtoi(string s, int i = 0)
+    // {
+    //     while (i < s.size() && s[i] == ' ')
+    //         i++;
+
+    //     // Handle the sign here ;
+    //     int sign = 1;
+    //     if (i < s.size() && (s[i] == '+' || s[i] == '-'))
+    //     {
+    //         sign = (s[i] == '-') ? -1 : 1;
+    //         i++;
+    //     }
+    //     return helper(s, i, 0, sign);
+    // }
+
+    int atMostKDistincts(string s, int k)
     {
-        string ans = "";
-        for (int i = 0; i < s.length(); i++)
+        int l = 0;
+        int res = 0;
+        unordered_map<char, int> map;
+        for (int r = 0; r < s.length(); r++)
         {
-            if (s[i] == ' ' || s[i] == '0')
-                continue;
-            if (isalpha(s[i]))
-                continue;
-            if (s[i] == '-' || s[i] == '+')
-                ans.push_back(s[i]);
-            else
+            map[s[r]]++;
+            while (map.size() > k)
             {
-                if (isalpha(s[i]))
-                    continue;
-                else
-                    ans.push_back(s[i]);
+                map[s[l]]--;
+                if (map[s[l]] == 0)
+                    map.erase(s[l]);
+                l++;
             }
+            res += (r - l + 1);
         }
-        return stoi(ans);
+        return res;
     }
-    int countSubstrings(string s)
+    int countSubstrings(string s, int k)
     {
+        return atMostKDistincts(s, k) - atMostKDistincts(s, k - 1);
     }
 };
 
@@ -307,12 +330,12 @@ int main()
     // }
     string s;
     cin >> s;
-    // string g;
-    // cin >> g;
+    int k;
+    cin >> k;
 
     Solution solution;
 
-    int ans = solution.myAtoi(s);
+    int ans = solution.countSubstrings(s, k);
     cout << ans;
     // return 0;
 }
