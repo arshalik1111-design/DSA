@@ -222,7 +222,7 @@ public:
         }
         return ans;
     }
-    // 1614. Maximum Nesting Depth of the Parentheses
+    // Leetcode 1614. Maximum Nesting Depth of the Parentheses
     int maxDepth(string s)
     {
         int count = 0;
@@ -241,7 +241,7 @@ public:
         }
         return ans;
     }
-    // 13. Roman to Integer
+    // Leetcode 13. Roman to Integer
     int roamnToInt(string s)
     {
 
@@ -272,28 +272,36 @@ public:
     // 8. String to Integer (atoi)
     // We'll solve this problem using recursion, we keep on running the loop till we reach the end of the array or a non-digit is encounter
 
-    // const int INT_MIN_VAL = -2147483648;
-    // const int INT_MAX_VAL = 2147483647;
-    // int helper(string s, int i, int num, int sign)
-    // {
-    //     if (i >= s.size() && !isdigit(s[i]))
-    //         return (int)(sign * num);
-    // }
-    // int myAtoi(string s, int i = 0)
-    // {
-    //     while (i < s.size() && s[i] == ' ')
-    //         i++;
+    const int INT_MIN_VAL = -2147483648;
+    const int INT_MAX_VAL = 2147483647;
+    int helper(string s, int i, int num, int sign)
+    {
+        if (i >= s.size() && !isdigit(s[i]))
+            return (int)(sign * num);
 
-    //     // Handle the sign here ;
-    //     int sign = 1;
-    //     if (i < s.size() && (s[i] == '+' || s[i] == '-'))
-    //     {
-    //         sign = (s[i] == '-') ? -1 : 1;
-    //         i++;
-    //     }
-    //     return helper(s, i, 0, sign);
-    // }
+        num = (num * 10) + (s[i] - '0');
+        if (sign * num <= INT_MIN_VAL)
+            return INT_MIN_VAL;
+        if (sign * num >= INT_MAX_VAL)
+            return INT_MAX_VAL;
+        return helper(s, i + 1, num, sign);
+    }
+    int myAtoi(string s, int i = 0)
+    {
+        while (i < s.size() && s[i] == ' ')
+            i++;
 
+        // Handle the sign here ;
+        int sign = 1;
+        if (i < s.size() && (s[i] == '+' || s[i] == '-'))
+        {
+            sign = (s[i] == '-') ? -1 : 1;
+            i++;
+        }
+        return helper(s, i, 0, sign);
+    }
+
+    // Count Number Of Substrings
     int atMostKDistincts(string s, int k)
     {
         int l = 0;
