@@ -321,9 +321,47 @@ public:
         }
         return res;
     }
+
     int countSubstrings(string s, int k)
     {
         return atMostKDistincts(s, k) - atMostKDistincts(s, k - 1);
+    }
+
+    // Leetcode 5. Longest Palindromic Substring
+    int t[1001][1001];
+    bool solve(string &s, int i, int j)
+    {
+        if (i >= j)
+            return 1;
+        if (t[i][j] != -1)
+            return t[i][j];
+        if (s[i] == s[j])
+        {
+            return t[i][j] = solve(s, i + 1, j - 1);
+        }
+
+        return t[i][j] = 0;
+    }
+    string longestPalindrome(string s)
+    {
+        int startIndex = 0;
+        int maxLength = INT_MIN;
+        memset(t, -1, sizeof(t));
+        for (int i = 0; i < s.length(); i++)
+        {
+            for (int j = i; j < s.length(); j++)
+            {
+                if (solve(s, i, j))
+                {
+                    if ((j - i + 1) > maxLength)
+                    {
+                        maxLength = max(maxLength, (j - i + 1));
+                        startIndex = i;
+                    }
+                }
+            }
+        }
+        return s.substr(startIndex, maxLength);
     }
 };
 
@@ -338,12 +376,12 @@ int main()
     // }
     string s;
     cin >> s;
-    int k;
-    cin >> k;
+    // int k;
+    // cin >> k;
 
     Solution solution;
 
-    int ans = solution.countSubstrings(s, k);
+    string ans = solution.longestPalindrome(s);
     cout << ans;
     // return 0;
 }
