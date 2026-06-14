@@ -363,25 +363,39 @@ public:
         }
         return s.substr(startIndex, maxLength);
     }
+
+    // Leetcode 1781. Sum of Beauty of All Substrings
+    int beautySum(string s)
+    {
+        int n = s.length();
+        int sum = 0;
+
+        for (int i = 0; i < n; i++)
+        {
+            unordered_map<char, int> map;
+            for (int j = i; j < n; j++)
+            {
+                map[s[j]]++;
+                int maxi = INT_MIN;
+                int mini = INT_MAX;
+                for (auto it : map)
+                {
+                    maxi = max(it.second, maxi);
+                    mini = min(it.second, mini);
+                }
+                sum += (maxi - mini);
+            }
+        }
+        return sum;
+    }
 };
 
 int main()
 {
-    // int n;
-    // cin >> n;
-    // vector<string> s(n);
-    // for (int i = 0; i < n; i++)
-    // {
-    //     cin >> s[i];
-    // }
     string s;
     cin >> s;
-    // int k;
-    // cin >> k;
-
     Solution solution;
-
-    string ans = solution.longestPalindrome(s);
+    int ans = solution.beautySum(s);
     cout << ans;
-    // return 0;
+    return 0;
 }
