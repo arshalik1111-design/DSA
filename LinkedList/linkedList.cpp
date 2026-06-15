@@ -46,6 +46,44 @@ public:
         }
         cout << endl;
     }
+
+    // function to insert at the tail of the linked list.
+    // Here, we have to take care of two edge cases:
+    // 1. check if the list is empty or not, if the list is empty i.e. head == nullptr, the newNode becomes the head and the tail and we return the new node as our new head.
+
+    Node *insertAtLast(int newData, Node *head)
+    {
+        Node *newNode = new Node(newData);
+        // Scenario 1: Edge case - If list is empty
+        if (head == nullptr)
+            return newNode;
+        // Scenario 2: Traverse to the last node
+        Node *curr = head;
+        while (curr->next != nullptr) // Stop EXACTLY at the last node
+        {
+            curr = curr->next;
+        }
+        curr->next = newNode;
+        return head;
+    }
+
+    Node *deleteTail(Node *head)
+    {
+        if (head == NULL || head->next == NULL)
+        {
+            delete head;
+            return NULL;
+        }
+
+        Node *curr = head;
+        while (curr->next->next != NULL)
+        {
+            curr = curr->next;
+        }
+        delete curr->next;
+        curr->next = NULL;
+        return head;
+    }
 };
 int main()
 {
@@ -57,8 +95,9 @@ int main()
     // Original list
     cout << "Original List: ";
     sol.printList(head);
-    head = sol.insertAtHead(head, 1);
+
+    head = sol.deleteTail(head);
     // List after Insertion
-    cout << "After Insertion: ";
+    cout << "After Deletion: ";
     sol.printList(head);
 }
