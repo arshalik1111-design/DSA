@@ -1,16 +1,21 @@
 #include <bits./stdc++.h>
 using namespace std;
-
+// Node class to represent each node in the linked list
 class Node
 {
 public:
+    // Data stored in the node
     int data;
+    // Pointer to the next node
     Node *next;
+    // Constructor with data and next pointer
     Node(int data1, Node *next1)
     {
         data = data1;
         next = next1;
     }
+    // Constructor with only data
+
     Node(int data2)
     {
         data = data2;
@@ -25,7 +30,9 @@ public:
     // function to insert at head of LinkedList
     Node *insertAtHead(Node *head, int newData)
     {
+        // Create a new node whose next points to current head
         Node *newNode = new Node(newData, head);
+        // Return the new node as the head
         return newNode;
     }
     // function to print the list
