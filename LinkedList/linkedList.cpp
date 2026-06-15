@@ -49,9 +49,7 @@ public:
 };
 int main()
 {
-
     Solution sol;
-
     // create a simple linkedlist: 2->3->4
     Node *head = new Node(2);
     head->next = new Node(3);
