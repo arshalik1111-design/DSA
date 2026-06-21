@@ -84,6 +84,19 @@ public:
         curr->next = NULL;
         return head;
     }
+
+    int lengthOfLinkedList(Node *head)
+    {
+        int cnt = 0;
+        Node *curr = head;
+        while (curr != NULL)
+        {
+            cnt++;
+            curr = curr->next;
+        }
+
+        return cnt;
+    }
 };
 int main()
 {
@@ -93,11 +106,10 @@ int main()
     head->next = new Node(3);
     head->next->next = new Node(4);
     // Original list
-    cout << "Original List: ";
-    sol.printList(head);
+    // cout << "Original List: ";
+    // sol.printList(head);
 
-    head = sol.deleteTail(head);
-    // List after Insertion
-    cout << "After Deletion: ";
-    sol.printList(head);
+    cout << "Length of Linked List: " << sol.lengthOfLinkedList(head) << endl;
+    // cout << "After Deletion: ";
+    // sol.printList(head);
 }
