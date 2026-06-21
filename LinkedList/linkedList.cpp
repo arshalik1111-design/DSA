@@ -97,19 +97,40 @@ public:
 
         return cnt;
     }
+
+    bool searchInList(Node *head, int val)
+    {
+        Node *curr = head;
+        while (curr != NULL)
+        {
+            if (curr->data == val)
+            {
+                return true;
+            }
+            curr->next;
+        }
+        return false;
+    }
 };
 int main()
 {
-    Solution sol;
     // create a simple linkedlist: 2->3->4
     Node *head = new Node(2);
     head->next = new Node(3);
     head->next->next = new Node(4);
+    head->next->next->next = new Node(5);
     // Original list
     // cout << "Original List: ";
     // sol.printList(head);
+    Solution obj;
 
-    cout << "Length of Linked List: " << sol.lengthOfLinkedList(head) << endl;
+    if (obj.searchInList(head, 3))
+        cout << "Found";
+    else
+    {
+        cout << "Not Found";
+    }
     // cout << "After Deletion: ";
     // sol.printList(head);
+    return 0;
 }
