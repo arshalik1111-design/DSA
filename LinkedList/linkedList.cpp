@@ -107,14 +107,14 @@ public:
             {
                 return true;
             }
-            curr->next;
+            curr = curr->next;
         }
         return false;
     }
 };
 int main()
 {
-    // create a simple linkedlist: 2->3->4
+    // create a simple linkedlist: 2->3->4->5
     Node *head = new Node(2);
     head->next = new Node(3);
     head->next->next = new Node(4);
@@ -124,7 +124,7 @@ int main()
     // sol.printList(head);
     Solution obj;
 
-    if (obj.searchInList(head, 3))
+    if (obj.searchInList(head, 6))
         cout << "Found";
     else
     {
