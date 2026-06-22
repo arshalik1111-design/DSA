@@ -85,6 +85,31 @@ public:
         delete curr;
         return head;
     }
+
+    Node *reverseDLL(Node *head)
+    {
+        // If list is empty or has only one node, return as-is
+        if (head == nullptr || head->next == nullptr)
+        {
+            return head;
+        }
+        Node *curr = head;
+        stack<int> st;
+        while (curr != NULL)
+        {
+            st.push(curr->data);
+            curr = curr->next;
+        }
+        curr = head;
+        while (curr != NULL)
+        {
+            curr->data = st.top();
+            st.pop();
+            curr = curr->next;
+        }
+        return head;
+    }
+
     void printList(Node *head)
     {
         Node *curr = head;
@@ -99,7 +124,7 @@ public:
 int main()
 {
     // Initialize an array of integers
-    vector<int> arr = {};
+    vector<int> arr = {7, 4, 2};
     Solution sol;
 
     // Convert the array into a doubly linked list
@@ -108,7 +133,7 @@ int main()
     // Original list
     cout << "Original List: ";
     sol.printList(head);
-    head = sol.deletionOfTail(head);
+    head = sol.reverseDLL(head);
 
     cout << "After Insertion: ";
     sol.printList(head);
