@@ -63,6 +63,28 @@ public:
         return head;
     }
 
+    Node *deletionOfTail(Node *head)
+    {
+        if (head == NULL)
+        {
+
+            return NULL;
+        }
+        if (head->next == NULL)
+        {
+            delete head;
+            return NULL;
+        }
+
+        Node *curr = head;
+        while (curr->next != NULL)
+        {
+            curr = curr->next;
+        }
+        curr->prev->next = NULL;
+        delete curr;
+        return head;
+    }
     void printList(Node *head)
     {
         Node *curr = head;
@@ -77,7 +99,7 @@ public:
 int main()
 {
     // Initialize an array of integers
-    vector<int> arr = {12, 5, 8, 7, 4};
+    vector<int> arr = {};
     Solution sol;
 
     // Convert the array into a doubly linked list
@@ -86,7 +108,7 @@ int main()
     // Original list
     cout << "Original List: ";
     sol.printList(head);
-    head = sol.insertAtTail(head, 6);
+    head = sol.deletionOfTail(head);
 
     cout << "After Insertion: ";
     sol.printList(head);
