@@ -25,6 +25,37 @@ public:
     }
 };
 
+class SolutionBruteForce
+{
+public:
+    Node *reverseDLL(Node *head)
+    {
+        // Brute Force
+        // Time Complexity: O(N) | Space Complexity: O(N)
+
+        // If list is empty or has only one node, return as-is
+        if (head == nullptr || head->next == nullptr)
+        {
+            return head;
+        }
+        Node *curr = head;
+        stack<int> st;
+        while (curr != NULL)
+        {
+            st.push(curr->data);
+            curr = curr->next;
+        }
+        curr = head;
+        while (curr != NULL)
+        {
+            curr->data = st.top();
+            st.pop();
+            curr = curr->next;
+        }
+        return head;
+    }
+};
+
 class Solution
 {
 public:
@@ -88,26 +119,8 @@ public:
 
     Node *reverseDLL(Node *head)
     {
-        // If list is empty or has only one node, return as-is
-        if (head == nullptr || head->next == nullptr)
-        {
-            return head;
-        }
-        Node *curr = head;
-        stack<int> st;
-        while (curr != NULL)
-        {
-            st.push(curr->data);
-            curr = curr->next;
-        }
-        curr = head;
-        while (curr != NULL)
-        {
-            curr->data = st.top();
-            st.pop();
-            curr = curr->next;
-        }
-        return head;
+        // Optimal Approach
+        // Time Complexity: O(N) | Space Complexity: O(1)
     }
 
     void printList(Node *head)
@@ -126,15 +139,14 @@ int main()
     // Initialize an array of integers
     vector<int> arr = {7, 4, 2};
     Solution sol;
-
+    SolutionBruteForce obj;
     // Convert the array into a doubly linked list
     Node *head = sol.convertArr2DLL(arr);
-
     // Original list
     cout << "Original List: ";
     sol.printList(head);
-    head = sol.reverseDLL(head);
-
-    cout << "After Insertion: ";
+    // head = sol.reverseDLL(head);
+    head = obj.reverseDLL(head);
+    cout << "After Operation: ";
     sol.printList(head);
 }
