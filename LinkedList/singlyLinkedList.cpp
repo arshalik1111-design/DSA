@@ -35,17 +35,6 @@ public:
         // Return the new node as the head
         return newNode;
     }
-    // function to print the list
-    void printList(Node *head)
-    {
-        Node *temp = head;
-        while (temp != nullptr)
-        {
-            cout << temp->data << " ";
-            temp = temp->next;
-        }
-        cout << endl;
-    }
 
     // function to insert at the tail of the linked list.
     // Here, we have to take care of two edge cases:
@@ -110,6 +99,18 @@ public:
             curr = curr->next;
         }
         return false;
+    }
+
+    // function to print the list
+    void printList(Node *head)
+    {
+        Node *temp = head;
+        while (temp != nullptr)
+        {
+            cout << temp->data << " ";
+            temp = temp->next;
+        }
+        cout << endl;
     }
 };
 int main()
