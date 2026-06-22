@@ -43,16 +43,23 @@ public:
         }
         return head;
     }
-    Node *insertAtTail(Node *head, int val)
+    // Function to insert a new node with value 'k' at the end of the linkedlist.
+    Node *insertAtTail(Node *head, int k)
     {
-        Node *newNode = new Node(val);
+        Node *newNode = new Node(k);
+        if (head == nullptr)
+        {
+            return newNode;
+        }
         Node *curr = head;
         while (curr->next != nullptr)
         {
             curr = curr->next;
         }
-        curr->next->data = val;
-        curr->next->next = nullptr;
+        curr->next = newNode;
+        newNode->prev = curr;
+        newNode->next = nullptr;
+        curr = newNode;
         return head;
     }
 
@@ -69,13 +76,13 @@ public:
 };
 int main()
 {
-    Node *head = new Node(1);
-    head->next = new Node(2);
-    head->next->next = new Node(3);
-    head->next->next->next = new Node(4);
-    head->next->next->next->next = new Node(5);
-
+    // Initialize an array of integers
+    vector<int> arr = {12, 5, 8, 7, 4};
     Solution sol;
+
+    // Convert the array into a doubly linked list
+    Node *head = sol.convertArr2DLL(arr);
+
     // Original list
     cout << "Original List: ";
     sol.printList(head);
