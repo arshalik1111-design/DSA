@@ -8,23 +8,22 @@ public:
     // Pointer to the next node
     Node *next;
     // Pointer to the previous node
-    Node *prev;
-    // Constructor when data, next and prev are provided
+    Node *back;
+    // Constructor when data, next and back are provided
     Node(int data1, Node *next1, Node *prev1)
     {
         data = data1;
         next = next1;
-        prev = prev1;
+        back = prev1;
     }
     // Constructor when only data is provided
     Node(int data2)
     {
         data = data2;
         next = nullptr;
-        prev = nullptr;
+        back = nullptr;
     }
 };
-
 class SolutionBruteForce
 {
 public:
@@ -65,12 +64,12 @@ public:
     {
         // Create the head node with the first element of the array
         Node *head = new Node(arr[0]);
-        Node *prev = head;
+        Node *back = head;
         for (int i = 1; i < arr.size(); i++)
         {
-            Node *temp = new Node(arr[i], nullptr, prev);
-            prev->next = temp;
-            prev = temp;
+            Node *temp = new Node(arr[i], nullptr, back);
+            back->next = temp;
+            back = temp;
         }
         return head;
     }
@@ -88,7 +87,7 @@ public:
             curr = curr->next;
         }
         curr->next = newNode;
-        newNode->prev = curr;
+        newNode->back = curr;
         newNode->next = nullptr;
         curr = newNode;
         return head;
@@ -112,7 +111,7 @@ public:
         {
             curr = curr->next;
         }
-        curr->prev->next = NULL;
+        curr->back->next = NULL;
         delete curr;
         return head;
     }
@@ -121,6 +120,19 @@ public:
     {
         // Optimal Approach
         // Time Complexity: O(N) | Space Complexity: O(1)
+
+        Node *curr = head;
+        while (curr != NULL)
+        {
+            // Swap next and back pointers of current node
+            Node *temp = curr->next;
+            curr->next = curr->back;
+            curr->back = temp;
+            // Move to the next node in original order
+            head = curr;
+            curr = temp;
+        }
+        return head;
     }
 
     void printList(Node *head)
@@ -137,7 +149,7 @@ public:
 int main()
 {
     // Initialize an array of integers
-    vector<int> arr = {7, 4, 2};
+    vector<int> arr = {7, 4, 2, 3, 1, 5, 3, 12};
     Solution sol;
     SolutionBruteForce obj;
     // Convert the array into a doubly linked list
@@ -146,7 +158,7 @@ int main()
     cout << "Original List: ";
     sol.printList(head);
     // head = sol.reverseDLL(head);
-    head = obj.reverseDLL(head);
+    head = sol.reverseDLL(head);
     cout << "After Operation: ";
     sol.printList(head);
 }
