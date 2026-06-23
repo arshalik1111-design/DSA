@@ -55,6 +55,25 @@ public:
         }
         return temp;
     }
+
+    Node *reverseList(Node *head)
+    {
+        Node *curr = head;
+        stack<int> st;
+        while (curr != nullptr)
+        {
+            st.push(curr->data);
+            curr = curr->next;
+        }
+        curr = head;
+        while (curr != nullptr)
+        {
+            curr->data = st.top();
+            st.pop();
+            curr = curr->next;
+        }
+        return head;
+    }
 };
 
 // Solution class to handle LinkedList operations
@@ -172,8 +191,7 @@ int main()
     // Original list
     cout << "Original List: ";
     sol.printList(head);
-    head = sol.middleNode(head);
-
+    head = sbf.reverseList(head);
     cout << "After Operation: ";
     sol.printList(head);
     return 0;
