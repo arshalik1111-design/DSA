@@ -23,6 +23,40 @@ public:
     }
 };
 
+class SolutionBruteForce
+{
+public:
+    // Leetcode 876. Middle of the Linked List
+
+    Node *middleNode(Node *head)
+    {
+        // If the list is empty or have only one node return it's head as the middle
+        if (head == NULL || head->next == NULL)
+        {
+            return head;
+        }
+        Node *temp = head;
+        int cnt = 0;
+        while (temp != nullptr)
+        {
+            cnt++;
+            temp = temp->next;
+        }
+        int mid = cnt / 2 + 1;
+        temp = head;
+        while (temp != nullptr)
+        {
+            mid = mid - 1;
+            if (mid == 0)
+            {
+                break;
+            }
+            temp = temp->next;
+        }
+        return temp;
+    }
+};
+
 // Solution class to handle LinkedList operations
 class Solution
 {
@@ -116,22 +150,20 @@ public:
 int main()
 {
     // create a simple linkedlist: 2->3->4->5
-    Node *head = new Node(2);
-    head->next = new Node(3);
-    head->next->next = new Node(4);
-    head->next->next->next = new Node(5);
-    // Original list
-    // cout << "Original List: ";
-    // sol.printList(head);
-    Solution obj;
+    Node *head = new Node(1);
+    head->next = new Node(2);
+    head->next->next = new Node(3);
+    head->next->next->next = new Node(4);
+    head->next->next->next->next = new Node(5);
+    Solution sol;
+    SolutionBruteForce sbf;
 
-    if (obj.searchInList(head, 6))
-        cout << "Found";
-    else
-    {
-        cout << "Not Found";
-    }
-    // cout << "After Deletion: ";
-    // sol.printList(head);
+    // Original list
+    cout << "Original List: ";
+    sol.printList(head);
+    head = sbf.middleNode(head);
+
+    cout << "After Operation: ";
+    sol.printList(head);
     return 0;
 }
