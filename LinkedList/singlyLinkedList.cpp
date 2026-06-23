@@ -135,6 +135,9 @@ public:
         return false;
     }
 
+    Node *middleNode(Node *head)
+    {
+    }
     // function to print the list
     void printList(Node *head)
     {
