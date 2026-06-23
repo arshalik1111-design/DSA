@@ -27,7 +27,6 @@ class SolutionBruteForce
 {
 public:
     // Leetcode 876. Middle of the Linked List
-
     Node *middleNode(Node *head)
     {
         // If the list is empty or have only one node return it's head as the middle
@@ -154,6 +153,7 @@ public:
         return false;
     }
 
+    // Leetcode 876. Middle of the Linked List
     Node *middleNode(Node *head)
     {
         Node *slow = head;
@@ -164,6 +164,20 @@ public:
             fast = fast->next->next;
         }
         return slow;
+    }
+    // Leetcode 206. Reverse Linked List
+    Node *reverseList(Node *head)
+    {
+        Node *curr = head;
+        Node *prev = NULL;
+        while (curr != nullptr)
+        {
+            Node *temp = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = temp;
+        }
+        return prev;
     }
     // function to print the list
     void printList(Node *head)
@@ -191,7 +205,7 @@ int main()
     // Original list
     cout << "Original List: ";
     sol.printList(head);
-    head = sbf.reverseList(head);
+    head = sol.reverseList(head);
     cout << "After Operation: ";
     sol.printList(head);
     return 0;
