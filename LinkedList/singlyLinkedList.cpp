@@ -57,6 +57,9 @@ public:
 
     Node *reverseList(Node *head)
     {
+        // Optimal Approach
+        // Time Complexity: O(N) | Space Complexity: O(N)
+
         Node *curr = head;
         stack<int> st;
         while (curr != nullptr)
@@ -168,6 +171,8 @@ public:
     // Leetcode 206. Reverse Linked List
     Node *reverseList(Node *head)
     {
+        // Optimal Approach
+        // Time Complexity: O(N) | Space Complexity: O(1)
         Node *curr = head;
         Node *prev = NULL;
         while (curr != nullptr)
