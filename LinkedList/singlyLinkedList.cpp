@@ -137,6 +137,14 @@ public:
 
     Node *middleNode(Node *head)
     {
+        Node *slow = head;
+        Node *fast = head;
+        while (fast != nullptr && fast->next != nullptr)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return slow;
     }
     // function to print the list
     void printList(Node *head)
@@ -164,7 +172,7 @@ int main()
     // Original list
     cout << "Original List: ";
     sol.printList(head);
-    head = sbf.middleNode(head);
+    head = sol.middleNode(head);
 
     cout << "After Operation: ";
     sol.printList(head);
