@@ -79,16 +79,18 @@ public:
 
     bool detectCycle(Node *head)
     {
-        // Optiaml Approach
-        // Time Complexity: O(N) | Space Complexity: O(1)
-        Node *slow = head;
-        Node *fast = head;
-        while (fast != nullptr && fast->next != nullptr)
+        // Time Complexity: O(N) | Space Complexity: O(N)
+        Node *temp = head;
+        unordered_map<Node *, bool> mp;
+        while (temp != nullptr)
         {
-            slow = slow->next;
-            fast = fast->next->next;
-            if (slow == fast)
+            if (mp.find(temp) != mp.end())
+            {
                 return true;
+            }
+            // store the current node in map;
+            mp[temp] = true;
+            temp = temp->next;
         }
         return false;
     }
@@ -211,9 +213,18 @@ public:
     // }
     bool detectCycle(Node *head)
     {
-        // Optimal Approach
-        // Time Complexity: O(N) | Space Complexity: O(N)
-        Node *temp = head;
+        // Optiaml Approach
+        // Time Complexity: O(N) | Space Complexity: O(1)
+        Node *slow = head;
+        Node *fast = head;
+        while (fast != nullptr && fast->next != nullptr)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+            if (slow == fast)
+                return true;
+        }
+        return false;
     }
     void printList(Node *head)
     {
