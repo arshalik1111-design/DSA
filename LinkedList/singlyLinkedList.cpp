@@ -79,18 +79,16 @@ public:
 
     bool detectCycle(Node *head)
     {
-        // Time Complexity: O(N) | Space Complexity: O(N)
-        Node *temp = head;
-        unordered_map<Node *, bool> mp;
-        while (temp != nullptr)
+        // Optiaml Approach
+        // Time Complexity: O(N) | Space Complexity: O(1)
+        Node *slow = head;
+        Node *fast = head;
+        while (fast != nullptr && fast->next != nullptr)
         {
-            if (mp.find(temp) != mp.end())
-            {
+            slow = slow->next;
+            fast = fast->next->next;
+            if (slow == fast)
                 return true;
-            }
-            // store the current node in map;
-            mp[temp] = true;
-            temp = temp->next;
         }
         return false;
     }
