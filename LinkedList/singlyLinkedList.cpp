@@ -76,6 +76,24 @@ public:
         }
         return head;
     }
+
+    bool detectCycle(Node *head)
+    {
+        // Time Complexity: O(N) | Space Complexity: O(N)
+        Node *temp = head;
+        unordered_map<Node *, bool> mp;
+        while (temp != nullptr)
+        {
+            if (mp.find(temp) != mp.end())
+            {
+                return true;
+            }
+            // store the current node in map;
+            mp[temp] = true;
+            temp = temp->next;
+        }
+        return false;
+    }
 };
 
 // Solution class to handle LinkedList operations
@@ -185,6 +203,20 @@ public:
         return prev;
     }
     // function to print the list
+
+    // Node *reverseListRecursively(Node *head)
+    // {
+    //     if (head == NULL || head->next == NULL)
+    //     {
+    //         return head;
+    //     }
+    // }
+    bool detectCycle(Node *head)
+    {
+        // Optimal Approach
+        // Time Complexity: O(N) | Space Complexity: O(N)
+        Node *temp = head;
+        }
     void printList(Node *head)
     {
         Node *temp = head;
