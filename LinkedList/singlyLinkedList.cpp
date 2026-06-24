@@ -108,6 +108,30 @@ public:
         }
         return nullptr;
     }
+
+    int loopLength(Node *head)
+    {
+        unordered_map<Node *, int> mp;
+        Node *temp = head;
+        int timer = 0;
+        while (head != nullptr)
+        {
+            if (mp.find(head) != mp.end())
+            {
+                int length = timer - mp[temp];
+                return length;
+            }
+            // Store the current node and its timer value
+            mp[temp] = timer;
+
+            // Move to the next node
+            temp = temp->next;
+
+            // Increment the timer
+            timer++;
+        }
+        return 0;
+    }
 };
 
 // Solution class to handle LinkedList operations
