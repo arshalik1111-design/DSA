@@ -94,6 +94,20 @@ public:
         }
         return false;
     }
+
+    Node *detectCycleII(Node *head)
+    {
+        // Time Complexity: O(N) | Space Complexity: O(N)
+        unordered_map<Node *, bool> mp;
+        while (head != nullptr)
+        {
+            if (mp.find(head) != mp.end())
+                return head;
+            mp[head] = true;
+            head = head->next;
+        }
+        return nullptr;
+    }
 };
 
 // Solution class to handle LinkedList operations
@@ -226,6 +240,31 @@ public:
         }
         return false;
     }
+
+    Node *detectCycleII(Node *head)
+    {
+        // Optiaml Approach
+        // Time Complexity: O(N) | Space Complexity: O(1)
+        Node *slow = head;
+        Node *fast = head;
+        while (fast != nullptr && fast->next != nullptr)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+            if (slow == fast)
+            {
+                slow = head;
+                while (slow != fast)
+                {
+                    slow = slow->next;
+                    fast = fast->next;
+                }
+                return slow;
+            }
+        }
+        return nullptr;
+    }
+
     void printList(Node *head)
     {
         Node *temp = head;
