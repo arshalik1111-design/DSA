@@ -216,7 +216,7 @@ public:
         // Optimal Approach
         // Time Complexity: O(N) | Space Complexity: O(N)
         Node *temp = head;
-        }
+    }
     void printList(Node *head)
     {
         Node *temp = head;
@@ -230,12 +230,28 @@ public:
 };
 int main()
 {
-    // create a simple linkedlist: 2->3->4->5
+    // Create a simple linkedlist: 1->2->3->4->5
     Node *head = new Node(1);
     head->next = new Node(2);
     head->next->next = new Node(3);
     head->next->next->next = new Node(4);
     head->next->next->next->next = new Node(5);
+
+    // Create sample linked list nodes
+    // Node *head = new Node(1);
+    // Node *second = new Node(2);
+    // Node *third = new Node(3);
+    // Node *fourth = new Node(4);
+    // Node *fifth = new Node(5);
+
+    // Link the nodes
+    // head->next = second;
+    // second->next = third;
+    // third->next = fourth;
+    // fourth->next = fifth;
+
+    // Create a loop for testing
+    // fifth->next = third;
     Solution sol;
     SolutionBruteForce sbf;
 
@@ -245,5 +261,12 @@ int main()
     head = sol.reverseList(head);
     cout << "After Operation: ";
     sol.printList(head);
+
+    // Free allocated memory
+    // delete head;
+    // delete second;
+    // delete third;
+    // delete fourth;
+    // delete fifth;
     return 0;
 }
