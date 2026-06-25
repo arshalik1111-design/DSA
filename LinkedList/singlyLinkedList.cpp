@@ -57,7 +57,6 @@ public:
 
     Node *reverseList(Node *head)
     {
-        // Optimal Approach
         // Time Complexity: O(N) | Space Complexity: O(N)
 
         Node *curr = head;
@@ -131,6 +130,31 @@ public:
             timer++;
         }
         return 0;
+    }
+    // Leetcode 234. Palindrome Linked List
+    bool isPalindrome(Node *head)
+    {
+        // Time Complexity: O(N) | Space Complexity: O(N)
+        // Node *temp = head;
+        stack<int> st;
+        while (head != nullptr)
+        {
+            st.push(head->data);
+            head = head->next;
+        }
+        head = head;
+        while (head != nullptr)
+        {
+            if (head->data != st.top())
+            {
+                return false;
+            }
+
+            st.pop();
+
+            head = head->next;
+        }
+        return true;
     }
 };
 
@@ -289,6 +313,31 @@ public:
         return nullptr;
     }
 
+    Node *loopLength(Node *head) {}
+
+    bool isPalindrome(Node *head)
+    {
+        Node *temp = head;
+        stack<int> st;
+        while (temp != nullptr)
+        {
+            st.push(temp->data);
+            temp = temp->next;
+        }
+        temp = head;
+        while (temp != nullptr)
+        {
+            if (temp->data != st.top())
+            {
+                return false;
+            }
+
+            st.pop();
+
+            temp = temp->next;
+        }
+        return true;
+    }
     void printList(Node *head)
     {
         Node *temp = head;
@@ -330,7 +379,8 @@ int main()
     // Original list
     cout << "Original List: ";
     sol.printList(head);
-    head = sol.reverseList(head);
+    bool ans = sol.isPalindrome(head);
+    cout << ans;
     cout << "After Operation: ";
     sol.printList(head);
 
