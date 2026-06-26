@@ -359,53 +359,65 @@ public:
         cout << endl;
     }
 };
-int main()
-{
-    // Create a simple linkedlist: 1->2->3->4->5
-    // Node *head = new Node(1);
-    // head->next = new Node(2);
-    // head->next->next = new Node(3);
-    // head->next->next->next = new Node(4);
-    // head->next->next->next->next = new Node(5);
 
-    // Create sample linked list nodes
+void testLoops()
+{
+    Solution sol;
+
     Node *head = new Node(1);
     Node *second = new Node(2);
     Node *third = new Node(3);
     Node *fourth = new Node(4);
     Node *fifth = new Node(5);
 
-    // Link the nodes
     head->next = second;
     second->next = third;
     third->next = fourth;
     fourth->next = fifth;
+    fifth->next = second; // Create loop
 
-    // Create a loop for testing
-    fifth->next = second;
+    cout << "--- Testing Loop Length ---" << endl;
+    int ans = sol.loopLength(head);
+    if (ans > 0)
+        cout << "Loop Length: " << ans << endl;
+    else
+        cout << "No Loop Found" << endl;
+}
+
+void testReverseList()
+{
     Solution sol;
-    SolutionBruteForce sbf;
+
+    // Creating a normal list: 1 -> 2 -> 3 -> 4 -> 5
+    Node *head = new Node(1);
+    head->next = new Node(2);
+    head->next->next = new Node(3);
+    head->next->next->next = new Node(4);
+    head->next->next->next->next = new Node(5);
+
+    cout << "Original List: ";
+    sol.printList(head);
+
+    head = sol.reverseList(head);
+
+    cout << "Reversed List: ";
+    sol.printList(head);
+}
+int main()
+{
+    // Create a simple linkedlist: 1->2->3->4->5
+    Node *head = new Node(1);
+    head->next = new Node(2);
+    head->next->next = new Node(3);
+    head->next->next->next = new Node(4);
+    head->next->next->next->next = new Node(5);
+
+    // testLoopLength();
+    // testReverseList();
 
     // Original list
     // cout << "Original List: ";
     // sol.printList(head);
-    int ans = sol.loopLength(head);
-    if (ans > 0)
-    {
-        cout << ans;
-    }
-    else
-    {
-        cout << "No Loop Found";
-    }
-    // cout << "After Operation: ";
-    // sol.printList(head);
 
-    // Free allocated memory
-    // delete head;
-    // delete second;
-    // delete third;
-    // delete fourth;
-    // delete fifth;
     return 0;
 }
