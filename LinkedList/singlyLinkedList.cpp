@@ -313,30 +313,40 @@ public:
         return nullptr;
     }
 
-    Node *loopLength(Node *head) {}
+    int loopLength(Node *head)
+    {
+        // Optiaml Approach
+        // Time Complexity: O(N) | Space Complexity: O(1)
+        Node *slow = head;
+        Node *fast = head;
+        int cnt = 0;
+        while (fast != nullptr && fast->next != nullptr)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+            if (slow == fast)
+            {
+                Node *temp = slow;
+                int length = 1;
+                while (temp->next != slow)
+                {
+                    temp = temp->next;
+                    length++;
+                }
+                return length;
+            }
+        }
+        return 0;
+    }
 
     bool isPalindrome(Node *head)
     {
-        Node *temp = head;
-        stack<int> st;
-        while (temp != nullptr)
-        {
-            st.push(temp->data);
-            temp = temp->next;
-        }
-        temp = head;
-        while (temp != nullptr)
-        {
-            if (temp->data != st.top())
-            {
-                return false;
-            }
-
-            st.pop();
-
-            temp = temp->next;
-        }
-        return true;
+        // Optimal Approach
+        // Time Complexity: O(N) | Space Complexity: O(1)
+        Node *slow = head;
+        Node *fast = head;
+        if (head == nullptr || head->next == nullptr)
+            return true;
     }
     void printList(Node *head)
     {
@@ -352,37 +362,44 @@ public:
 int main()
 {
     // Create a simple linkedlist: 1->2->3->4->5
-    Node *head = new Node(1);
-    head->next = new Node(2);
-    head->next->next = new Node(3);
-    head->next->next->next = new Node(4);
-    head->next->next->next->next = new Node(5);
+    // Node *head = new Node(1);
+    // head->next = new Node(2);
+    // head->next->next = new Node(3);
+    // head->next->next->next = new Node(4);
+    // head->next->next->next->next = new Node(5);
 
     // Create sample linked list nodes
-    // Node *head = new Node(1);
-    // Node *second = new Node(2);
-    // Node *third = new Node(3);
-    // Node *fourth = new Node(4);
-    // Node *fifth = new Node(5);
+    Node *head = new Node(1);
+    Node *second = new Node(2);
+    Node *third = new Node(3);
+    Node *fourth = new Node(4);
+    Node *fifth = new Node(5);
 
     // Link the nodes
-    // head->next = second;
-    // second->next = third;
-    // third->next = fourth;
-    // fourth->next = fifth;
+    head->next = second;
+    second->next = third;
+    third->next = fourth;
+    fourth->next = fifth;
 
     // Create a loop for testing
-    // fifth->next = third;
+    fifth->next = second;
     Solution sol;
     SolutionBruteForce sbf;
 
     // Original list
-    cout << "Original List: ";
-    sol.printList(head);
-    bool ans = sol.isPalindrome(head);
-    cout << ans;
-    cout << "After Operation: ";
-    sol.printList(head);
+    // cout << "Original List: ";
+    // sol.printList(head);
+    int ans = sol.loopLength(head);
+    if (ans > 0)
+    {
+        cout << ans;
+    }
+    else
+    {
+        cout << "No Loop Found";
+    }
+    // cout << "After Operation: ";
+    // sol.printList(head);
 
     // Free allocated memory
     // delete head;
