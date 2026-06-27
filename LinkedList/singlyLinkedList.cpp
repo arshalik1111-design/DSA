@@ -343,10 +343,54 @@ public:
     {
         // Optimal Approach
         // Time Complexity: O(N) | Space Complexity: O(1)
+
         Node *slow = head;
         Node *fast = head;
         if (head == nullptr || head->next == nullptr)
             return true;
+        // Find middle of LL
+        while (fast != nullptr && fast->next != nullptr)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        // Reverse the second half i.e. list after the middle node
+    }
+
+    Node *seperateEvenOdd(Node *head)
+    {
+        if (head == nullptr || head->next == nullptr)
+            return head;
+        Node *temp = head;
+        Node *evenHead = new Node(-1);
+        Node *evenTail = evenHead;
+        Node *oddHead = new Node(-1);
+        Node *oddTail = oddHead;
+
+        while (temp != nullptr)
+        {
+            if (temp->data % 2 == 0)
+            {
+                evenTail->next = temp;
+                evenTail = evenTail->next;
+            }
+            else
+            {
+                oddTail->next = temp;
+                oddTail = oddTail->next;
+            }
+
+            temp = temp->next;
+        }
+        oddTail->next = evenHead->next;
+        evenTail->next = nullptr;
+        // Save the real result head before deleting the dummy anchors
+        Node *newHead = oddHead->next;
+
+        // Free up the dummy node memory to prevent leaks
+        delete oddHead;
+        delete evenHead;
+        return newHead;
     }
     void printList(Node *head)
     {
@@ -411,13 +455,18 @@ int main()
     head->next->next = new Node(3);
     head->next->next->next = new Node(4);
     head->next->next->next->next = new Node(5);
+    Solution sol;
+    SolutionBruteForce sbf;
 
     // testLoopLength();
     // testReverseList();
 
     // Original list
-    // cout << "Original List: ";
-    // sol.printList(head);
+    cout << "Original List: ";
+    sol.printList(head);
+    head = sol.seperateEvenOdd(head);
 
+    cout << "List after operation: ";
+    sol.printList(head);
     return 0;
 }
