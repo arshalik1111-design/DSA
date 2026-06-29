@@ -271,11 +271,11 @@ public:
         {
             return head;
         }
-        Node *newNode = reverseListRecursively(head->next);
+        Node *newHead = reverseListRecursively(head->next);
         Node *front = head->next;
         front->next = head;
         head->next = nullptr;
-        return newNode;
+        return newHead;
     }
     bool detectCycle(Node *head)
     {
