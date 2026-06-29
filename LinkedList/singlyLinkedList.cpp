@@ -264,15 +264,19 @@ public:
         }
         return prev;
     }
-    // function to print the list
 
-    // Node *reverseListRecursively(Node *head)
-    // {
-    //     if (head == NULL || head->next == NULL)
-    //     {
-    //         return head;
-    //     }
-    // }
+    Node *reverseListRecursively(Node *head)
+    {
+        if (head == NULL || head->next == NULL)
+        {
+            return head;
+        }
+        Node *newNode = reverseListRecursively(head->next);
+        Node *front = head->next;
+        front->next = head;
+        head->next = nullptr;
+        return newNode;
+    }
     bool detectCycle(Node *head)
     {
         // Optiaml Approach
@@ -392,6 +396,8 @@ public:
         delete evenHead;
         return newHead;
     }
+    // Function to print the list
+
     void printList(Node *head)
     {
         Node *temp = head;
@@ -464,7 +470,7 @@ int main()
     // Original list
     cout << "Original List: ";
     sol.printList(head);
-    head = sol.seperateEvenOdd(head);
+    head = sol.reverseListRecursively(head);
 
     cout << "List after operation: ";
     sol.printList(head);
