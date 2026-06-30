@@ -251,7 +251,7 @@ public:
     // Leetcode 206. Reverse Linked List
     Node *reverseList(Node *head)
     {
-        // Optimal Approach
+        // Optimal Approach: Iterative Aprroach
         // Time Complexity: O(N) | Space Complexity: O(1)
         Node *curr = head;
         Node *prev = NULL;
@@ -359,6 +359,23 @@ public:
             fast = fast->next->next;
         }
         // Reverse the second half i.e. list after the middle node
+        Node *newHead = reverseListRecursively(slow->next);
+        Node *firstHead = head;
+        Node *secondHead = newHead;
+
+        while (secondHead != nullptr)
+        {
+
+            if (firstHead->data != secondHead->data)
+            {
+                reverseListRecursively(newHead);
+                return false;
+            }
+            firstHead = firstHead->next;
+            secondHead = secondHead->next;
+        }
+        reverseListRecursively(newHead);
+        return true;
     }
 
     Node *seperateEvenOdd(Node *head)
@@ -459,8 +476,8 @@ int main()
     Node *head = new Node(1);
     head->next = new Node(2);
     head->next->next = new Node(3);
-    head->next->next->next = new Node(4);
-    head->next->next->next->next = new Node(5);
+    head->next->next->next = new Node(2);
+    head->next->next->next->next = new Node(1);
     Solution sol;
     SolutionBruteForce sbf;
 
@@ -470,7 +487,8 @@ int main()
     // Original list
     cout << "Original List: ";
     sol.printList(head);
-    head = sol.reverseListRecursively(head);
+    bool ans = sol.isPalindrome(head);
+    cout << ans;
 
     cout << "List after operation: ";
     sol.printList(head);
