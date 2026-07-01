@@ -132,6 +132,7 @@ public:
         return 0;
     }
     // Leetcode 234. Palindrome Linked List
+
     bool isPalindrome(Node *head)
     {
         // Time Complexity: O(N) | Space Complexity: O(N)
@@ -155,6 +156,45 @@ public:
             head = head->next;
         }
         return true;
+    }
+
+    // Leetcode 328 : Odd Even List
+    Node *oddEvenList(Node *head)
+    {
+
+        if (head == nullptr || head->next == nullptr)
+            return head;
+
+        Node *temp = head;
+        vector<int> arr;
+        while (temp != nullptr && temp->next != nullptr)
+        {
+            arr.push_back(temp->data);
+            temp = temp->next->next;
+        }
+        if (temp)
+        {
+            arr.push_back(temp->data);
+        }
+        temp = head->next;
+        while (temp != nullptr && temp->next != nullptr)
+        {
+            arr.push_back(temp->data);
+            temp = temp->next->next;
+        }
+        if (temp)
+        {
+            arr.push_back(temp->data);
+        }
+        temp = head;
+        int i = 0;
+        while (temp != nullptr)
+        {
+            temp->data = arr[i];
+            i++;
+            temp = temp->next;
+        }
+        return head;
     }
 };
 
@@ -413,8 +453,30 @@ public:
         delete evenHead;
         return newHead;
     }
-    // Function to print the list
+    // Leetcode 328. Odd Even Linked List
+    Node *oddEvenList(Node *head)
+    {
+        // Optimal Approach
+        // Time Complexity: O(N) | Space Complexity: O(1)
+        if (head == nullptr || head->next == nullptr)
+            return head;
+        Node *odd = head;
+        Node *even = head->next;
+        Node *evenHead = head->next;
+        while (even != nullptr && even->next != nullptr)
+        {
+            odd->next = even->next;
+            odd = odd->next;
 
+            even->next = odd->next;
+            even = even->next;
+        }
+        odd->next = evenHead;
+
+        return head;
+    }
+
+    // Function to print the list
     void printList(Node *head)
     {
         Node *temp = head;
@@ -475,9 +537,9 @@ int main()
     // Create a simple linkedlist: 1->2->3->4->5
     Node *head = new Node(1);
     head->next = new Node(2);
-    // head->next->next = new Node(3);
-    // head->next->next->next = new Node(2);
-    // head->next->next->next->next = new Node(1);
+    head->next->next = new Node(3);
+    head->next->next->next = new Node(4);
+    head->next->next->next->next = new Node(5);
     Solution sol;
     SolutionBruteForce sbf;
 
@@ -487,8 +549,7 @@ int main()
     // Original list
     cout << "Original List: ";
     sol.printList(head);
-    bool ans = sol.isPalindrome(head);
-    cout << ans;
+    head = sol.oddEvenList(head);
 
     cout << "List after operation: ";
     sol.printList(head);
