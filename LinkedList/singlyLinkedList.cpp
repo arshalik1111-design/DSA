@@ -234,6 +234,30 @@ public:
         delete DelNode;
         return head;
     }
+
+    Node *deleteMiddle(Node *head)
+    {
+        int cnt = 0;
+        Node *temp = head;
+        while (temp != nullptr)
+        {
+            cnt++;
+            temp = temp->next;
+        }
+        int mid = cnt / 2;
+        temp = head;
+        while (temp != nullptr)
+        {
+            mid--;
+            if (mid == 0)
+                break;
+            temp = temp->next;
+        }
+        Node *todel = temp->next;
+        temp->next = temp->next->next;
+        free(todel);
+        return head;
+    }
 };
 
 // Solution class to handle LinkedList operations
@@ -606,7 +630,7 @@ int main()
     // Original list
     cout << "Original List: ";
     sol.printList(head);
-    head = sol.removeNthFromEnd(head, 2);
+    head = sbf.deleteMiddle(head);
 
     cout << "List after operation: ";
     sol.printList(head);
