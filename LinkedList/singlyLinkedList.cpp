@@ -557,6 +557,26 @@ public:
         slow->next = slow->next->next;
         return dummy->next;
     }
+
+    Node *deleteMiddle(Node *head)
+    {
+        // Optimal Approach
+        // Time Complexity: O(N/2) | Space Complexity: O(1)
+        if (head == nullptr || head->next == nullptr)
+            return nullptr;
+        Node *slow = head;
+        Node *fast = head->next->next;
+        while (fast != nullptr && fast->next != nullptr)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        Node *middle = slow->next;
+        slow->next = slow->next->next;
+        delete middle;
+        return head;
+    }
+
     // Function to print the list
     void printList(Node *head)
     {
@@ -630,7 +650,7 @@ int main()
     // Original list
     cout << "Original List: ";
     sol.printList(head);
-    head = sbf.deleteMiddle(head);
+    head = sol.deleteMiddle(head);
 
     cout << "List after operation: ";
     sol.printList(head);
