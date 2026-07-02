@@ -262,7 +262,7 @@ public:
     Node *sortList(Node *head)
     {
         // Optimal Approach
-        // Time Complexity: O(N/2) | Space Complexity: O(1)
+        // Time Complexity: O(2*N + N*logN) | Space Complexity: O(N)
         vector<int> arr;
         Node *temp = head;
         while (temp != nullptr)
