@@ -201,7 +201,6 @@ public:
     {
         if (head == nullptr)
         {
-
             return nullptr;
         }
         int cnt = 0;
@@ -515,6 +514,25 @@ public:
         return head;
     }
 
+    Node *removeNthFromEnd(Node *head, int n)
+    {
+        // Optimal Approach
+        // Time Complexity: O(N) | Space Complexity: O(1)
+        Node *dummy = new Node(0, head);
+        Node *slow = dummy;
+        Node *fast = dummy;
+        for (int i = 0; i <= n; i++)
+        {
+            fast = fast->next;
+        }
+        while (fast != nullptr)
+        {
+            slow = slow->next;
+            fast = fast->next;
+        }
+        slow->next = slow->next->next;
+        return dummy->next;
+    }
     // Function to print the list
     void printList(Node *head)
     {
@@ -588,7 +606,7 @@ int main()
     // Original list
     cout << "Original List: ";
     sol.printList(head);
-    head = sbf.removeNthFromEnd(head, 2);
+    head = sol.removeNthFromEnd(head, 2);
 
     cout << "List after operation: ";
     sol.printList(head);
