@@ -258,6 +258,30 @@ public:
         free(todel);
         return head;
     }
+
+    Node *sortList(Node *head)
+    {
+        // Optimal Approach
+        // Time Complexity: O(N/2) | Space Complexity: O(1)
+        vector<int> arr;
+        Node *temp = head;
+        while (temp != nullptr)
+        {
+            arr.push_back(temp->data);
+            temp = temp->next;
+        }
+        sort(begin(arr), end(arr));
+        temp = head;
+        int i = 0;
+
+        while (temp != nullptr)
+        {
+            temp->data = arr[i];
+            i++;
+            temp = temp->next;
+        }
+        return head;
+    }
 };
 
 // Solution class to handle LinkedList operations
@@ -636,9 +660,9 @@ void testReverseList()
 int main()
 {
     // Create a simple linkedlist: 1->2->3->4->5
-    Node *head = new Node(1);
+    Node *head = new Node(4);
     head->next = new Node(2);
-    head->next->next = new Node(3);
+    head->next->next = new Node(10);
     head->next->next->next = new Node(4);
     head->next->next->next->next = new Node(5);
     Solution sol;
@@ -650,7 +674,7 @@ int main()
     // Original list
     cout << "Original List: ";
     sol.printList(head);
-    head = sol.deleteMiddle(head);
+    head = sbf.sortList(head);
 
     cout << "List after operation: ";
     sol.printList(head);
