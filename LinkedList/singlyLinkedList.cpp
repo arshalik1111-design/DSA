@@ -196,6 +196,45 @@ public:
         }
         return head;
     }
+
+    Node *removeNthFromEnd(Node *head, int n)
+    {
+        if (head == nullptr)
+        {
+
+            return nullptr;
+        }
+        int cnt = 0;
+        Node *temp = head;
+        while (temp != nullptr)
+        {
+            cnt++;
+            temp = temp->next;
+        }
+        if (cnt == n)
+        {
+            Node *newHead = head->next;
+            delete head;
+            return newHead;
+        }
+        int res = cnt - n;
+        temp = head;
+        while (temp != nullptr)
+        {
+            res--;
+
+            if (res == 0)
+            {
+                break;
+            }
+
+            temp = temp->next;
+        }
+        Node *DelNode = temp->next;
+        temp->next = temp->next->next;
+        delete DelNode;
+        return head;
+    }
 };
 
 // Solution class to handle LinkedList operations
@@ -549,7 +588,7 @@ int main()
     // Original list
     cout << "Original List: ";
     sol.printList(head);
-    head = sol.oddEvenList(head);
+    head = sbf.removeNthFromEnd(head, 2);
 
     cout << "List after operation: ";
     sol.printList(head);
