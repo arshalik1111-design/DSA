@@ -601,6 +601,67 @@ public:
         return head;
     }
 
+    // Function to find middle of the list
+    Node *findMiddle(Node *head)
+    {
+        Node *slow = head;
+        Node *fast = head->next;
+        while (fast != nullptr && fast->next != nullptr)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return slow;
+    }
+    // function to merge two sorted linked list
+    Node *mergingTwoHalves(Node *list1, Node *list2)
+    {
+        Node *dummyNode = new Node(-1);
+        Node *temp = dummyNode;
+
+        while (list1 != nullptr && list2 != nullptr)
+        {
+            if (list1->data <= list2->data)
+            {
+                temp->next = list1;
+                list1 = list1->next;
+            }
+            else
+            {
+                temp->next = list2;
+                list2 = list2->next;
+            }
+            temp = temp->next;
+        }
+        if (list1 != nullptr)
+        {
+            temp->next = list1;
+        }
+        else
+        {
+            temp->next = list2;
+        }
+        return dummyNode->next;
+    }
+    // Leetcode 148. Sort List
+    Node *sortLL(Node *head)
+    {
+        if (head == nullptr || head->next == nullptr)
+        {
+            return head;
+        }
+        Node *temp = head;
+
+        Node *middle = findMiddle(head);
+
+        Node *right = middle->next;
+        middle->next = nullptr;
+        Node *left = head;
+        // Recursively split both halves of the list
+        left = sortLL(left);
+        right = sortLL(right);
+        return mergingTwoHalves(left, right);
+    }
     // Function to print the list
     void printList(Node *head)
     {
@@ -660,7 +721,7 @@ void testReverseList()
 int main()
 {
     // Create a simple linkedlist: 1->2->3->4->5
-    Node *head = new Node(4);
+    Node *head = new Node(6);
     head->next = new Node(2);
     head->next->next = new Node(10);
     head->next->next->next = new Node(4);
@@ -674,7 +735,7 @@ int main()
     // Original list
     cout << "Original List: ";
     sol.printList(head);
-    head = sbf.sortList(head);
+    head = sol.sortLL(head);
 
     cout << "List after operation: ";
     sol.printList(head);
