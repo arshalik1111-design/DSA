@@ -662,6 +662,46 @@ public:
         right = sortLL(right);
         return mergingTwoHalves(left, right);
     }
+
+    Node *sort012List(Node *head)
+    {
+        if (head == nullptr || head->next == nullptr)
+            return head;
+        Node *zeroDummy = new Node(-1);
+        Node *oneDummy = new Node(-1);
+        Node *twoDummy = new Node(-1);
+        Node *zeroTail = zeroDummy;
+        Node *oneTail = oneDummy;
+        Node *twoTail = twoDummy;
+        Node *temp = head;
+        while (temp != nullptr)
+        {
+            if (temp->data == 0)
+            {
+                zeroTail->next = temp;
+                zeroTail = zeroTail->next;
+            }
+            else if (temp->data == 1)
+            {
+                oneTail->next = temp;
+                oneTail = oneTail->next;
+            }
+            else
+            {
+                twoTail->next = temp;
+                twoTail = twoTail->next;
+            }
+            temp = temp->next;
+        }
+        zeroTail->next = oneDummy->next ? oneDummy->next : twoDummy->next;
+        oneTail->next = twoDummy->next;
+        twoTail->next = nullptr;
+        Node *newHead = zeroDummy->next;
+        delete zeroDummy;
+        delete oneDummy;
+        delete twoDummy;
+        return newHead;
+    }
     // Function to print the list
     void printList(Node *head)
     {
@@ -721,11 +761,12 @@ void testReverseList()
 int main()
 {
     // Create a simple linkedlist: 1->2->3->4->5
-    Node *head = new Node(6);
+    Node *head = new Node(1);
     head->next = new Node(2);
-    head->next->next = new Node(10);
-    head->next->next->next = new Node(4);
-    head->next->next->next->next = new Node(5);
+    head->next->next = new Node(0);
+    head->next->next->next = new Node(1);
+    head->next->next->next->next = new Node(0);
+    head->next->next->next->next->next = new Node(2);
     Solution sol;
     SolutionBruteForce sbf;
 
@@ -735,7 +776,7 @@ int main()
     // Original list
     cout << "Original List: ";
     sol.printList(head);
-    head = sol.sortLL(head);
+    head = sol.sort012List(head);
 
     cout << "List after operation: ";
     sol.printList(head);
