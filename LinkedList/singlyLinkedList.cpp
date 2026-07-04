@@ -302,6 +302,22 @@ public:
         }
         return nullptr;
     }
+
+    Node *getIntersectionNodeBetterApproach(Node *headA, Node *headB)
+    {
+        unordered_set<Node *> st;
+        while (headA != nullptr)
+        {
+            st.insert(headA);
+            headA = headA->next;
+        }
+        while (headB != nullptr)
+        {
+            if (st.find(headB) != st.end())
+                return headB;
+        }
+        return nullptr;
+    }
 };
 
 // Solution class to handle LinkedList operations
