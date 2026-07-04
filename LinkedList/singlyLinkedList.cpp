@@ -261,7 +261,7 @@ public:
 
     Node *sortList(Node *head)
     {
-        // Optimal Approach
+        // Brute Force Approach
         // Time Complexity: O(2*N + N*logN) | Space Complexity: O(N)
         vector<int> arr;
         Node *temp = head;
@@ -281,6 +281,26 @@ public:
             temp = temp->next;
         }
         return head;
+    }
+
+    Node *getIntersectionNode(Node *headA, Node *headB)
+    {
+        // Time Complexity: O(m*n) | Space Complexity: O(1)
+
+        while (headB != nullptr)
+        {
+            Node *temp = headA;
+            while (temp != nullptr)
+            {
+                if (headB == temp)
+                {
+                    return headB;
+                }
+                temp = temp->next;
+            }
+            headB = headB->next;
+        }
+        return nullptr;
     }
 };
 
@@ -701,6 +721,10 @@ public:
         delete oneDummy;
         delete twoDummy;
         return newHead;
+    }
+
+    Node *getIntersectionNode(Node *head)
+    {
     }
     // Function to print the list
     void printList(Node *head)
