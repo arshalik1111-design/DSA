@@ -795,6 +795,27 @@ public:
         }
         return t1;
     }
+    Node *addOne(Node *head)
+    {
+        head = reverseList(head);
+        Node *current = head;
+        int carry = 1;
+        while (current && carry)
+        {
+            int sum = current->data + carry;
+            current->data = sum % 10;
+            carry = sum / 10;
+
+            if (!current->next && carry)
+            {
+                current->next = new Node(carry);
+                carry = 0;
+            }
+            current = current->next;
+        }
+        head = reverseList(head);
+        return head;
+    }
 
     // Function to print the list
     void printList(Node *head)
@@ -858,9 +879,9 @@ int main()
     Node *head = new Node(1);
     head->next = new Node(2);
     head->next->next = new Node(0);
-    head->next->next->next = new Node(1);
-    head->next->next->next->next = new Node(0);
-    head->next->next->next->next->next = new Node(2);
+    // head->next->next->next = new Node(1);
+    // head->next->next->next->next = new Node(0);
+    // head->next->next->next->next->next = new Node(2);
     Solution sol;
     SolutionBruteForce sbf;
 
@@ -870,7 +891,7 @@ int main()
     // Original list
     cout << "Original List: ";
     sol.printList(head);
-    head = sol.sort012List(head);
+    head = sol.addOne(head);
 
     cout << "List after operation: ";
     sol.printList(head);
