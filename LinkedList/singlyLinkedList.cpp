@@ -21,6 +21,11 @@ public:
         data = data2;
         next = nullptr;
     }
+    Node()
+    {
+
+        next = nullptr;
+    }
 };
 
 class SolutionBruteForce
@@ -816,7 +821,7 @@ public:
         head = reverseList(head);
         return head;
     }
-
+    // Recursive Function to traverse till the end of the list.
     int addOneUtil(Node *node)
     {
         if (!node)
@@ -840,6 +845,34 @@ public:
         }
         return head;
     }
+
+    Node *addTwoNumbers(Node *l1, Node *l2)
+    {
+        Node *dummyNode = new Node();
+        Node *temp = dummyNode;
+        int carry = 0;
+        while ((l1 || l2) || carry)
+        {
+            int sum = 0;
+            if (l1 != nullptr)
+            {
+                sum += l1->data;
+                l1 = l1->next;
+            }
+            if (l2 != nullptr)
+            {
+                sum += l2->data;
+                l2 = l2->next;
+            }
+            sum += carry;
+            carry = carry / 10;
+            Node *newNode = new Node(sum % 10);
+            temp->next = newNode;
+            temp = temp->next;
+        }
+        return dummyNode->next;
+    }
+
     // Function to print the list
     void printList(Node *head)
     {
