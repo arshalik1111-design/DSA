@@ -817,25 +817,27 @@ public:
         return head;
     }
 
+    int addOneUtil(Node *node)
+    {
+        if (!node)
+        {
+            return 1;
+        }
+        int carry = addOneUtil(node->next);
+
+        int sum = node->data + carry;
+        node->data = sum % 10;
+        return sum / 10;
+    }
     Node *addOneRecursive(Node *head)
     {
-
-        Node *current = reverseList(head);
-        int carry = 1;
-        while (current && carry)
+        int carry = addOneUtil(head);
+        if (carry)
         {
-            int sum = current->data + carry;
-            current->data = sum % 10;
-            carry = carry / 10;
-
-            if (!current && carry)
-            {
-                current = new Node(carry);
-                current = current->next;
-            }
-            current = current->next;
+            Node *newNode = new Node(carry);
+            newNode->next = head;
+            head = newNode;
         }
-        reverseList(head);
         return head;
     }
     // Function to print the list
@@ -912,7 +914,7 @@ int main()
     // Original list
     cout << "Original List: ";
     sol.printList(head);
-    head = sol.addOne(head);
+    head = sol.addOneRecursive(head);
 
     cout << "List after operation: ";
     sol.printList(head);
