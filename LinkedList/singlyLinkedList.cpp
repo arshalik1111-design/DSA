@@ -817,6 +817,27 @@ public:
         return head;
     }
 
+    Node *addOneRecursive(Node *head)
+    {
+
+        Node *current = reverseList(head);
+        int carry = 1;
+        while (current && carry)
+        {
+            int sum = current->data + carry;
+            current->data = sum % 10;
+            carry = carry / 10;
+
+            if (!current && carry)
+            {
+                current = new Node(carry);
+                current = current->next;
+            }
+            current = current->next;
+        }
+        reverseList(head);
+        return head;
+    }
     // Function to print the list
     void printList(Node *head)
     {
@@ -876,9 +897,9 @@ void testReverseList()
 int main()
 {
     // Create a simple linkedlist: 1->2->3->4->5
-    Node *head = new Node(1);
-    head->next = new Node(2);
-    head->next->next = new Node(0);
+    Node *head = new Node(9);
+    head->next = new Node(9);
+    head->next->next = new Node(9);
     // head->next->next->next = new Node(1);
     // head->next->next->next->next = new Node(0);
     // head->next->next->next->next->next = new Node(2);
