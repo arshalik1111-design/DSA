@@ -885,6 +885,7 @@ public:
     }
     Node *reverseKGroup(Node *head, int k)
     {
+        // Time Complexity: O(N): As we visit each node for traversing and reversal | Space Complexity: O(1): Constant amount of extra memory is used for pointer and dummy nodes, no data structure like arrays or stack is used
         Node *dummy = new Node(0);
         dummy->next = head;
         Node *prevGroup = dummy;
@@ -912,6 +913,33 @@ public:
         }
         return dummy->next;
     }
+
+    Node *rightRotationofLL(Node *head, int k)
+    {
+        if (!head || !head->next || k == 0)
+        {
+            return head;
+        }
+        int length = 1;
+        Node *temp = head;
+        while (temp->next != nullptr)
+        {
+            temp = temp->next;
+            length++;
+        }
+        temp->next = head;
+        k = k % length;
+        int stepsForNewTail = length - k;
+        Node *newTail = head;
+        for (int i = 1; i < stepsForNewTail; i++)
+        {
+            newTail = newTail->next;
+        }
+        Node *newHead = newTail->next;
+        newTail->next = nullptr;
+        return newHead;
+    }
+
     // Function to print the list
     void printList(Node *head)
     {
@@ -986,7 +1014,7 @@ int main()
     // Original list
     cout << "Original List: ";
     sol.printList(head);
-    head = sol.reverseKGroup(head, 2);
+    head = sol.rightRotationofLL(head, 4);
 
     cout << "List after operation: ";
     sol.printList(head);
