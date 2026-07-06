@@ -873,6 +873,45 @@ public:
         return dummyNode->next;
     }
 
+    Node *getKthNode(Node *curr, int k)
+    {
+
+        while (curr && k > 0)
+        {
+            curr = curr->next;
+            k--;
+        }
+        return curr;
+    }
+    Node *reverseKGroup(Node *head, int k)
+    {
+        Node *dummy = new Node(0);
+        dummy->next = head;
+        Node *prevGroup = dummy;
+        while (true)
+        {
+            Node *kth = getKthNode(prevGroup, k);
+            if (!kth)
+                break;
+
+            Node *nextGroup = kth->next;
+            Node *prev = nextGroup;
+            Node *curr = prevGroup->next;
+
+            for (int i = 0; i < k; i++)
+            {
+                Node *temp = curr->next;
+                curr->next = prev;
+                prev = curr;
+                curr = temp;
+            }
+
+            Node *temp = prevGroup->next;
+            prevGroup->next = kth;
+            prevGroup = temp;
+        }
+        return dummy->next;
+    }
     // Function to print the list
     void printList(Node *head)
     {
@@ -932,12 +971,12 @@ void testReverseList()
 int main()
 {
     // Create a simple linkedlist: 1->2->3->4->5
-    Node *head = new Node(9);
-    head->next = new Node(9);
-    head->next->next = new Node(9);
-    // head->next->next->next = new Node(1);
-    // head->next->next->next->next = new Node(0);
-    // head->next->next->next->next->next = new Node(2);
+    Node *head = new Node(1);
+    head->next = new Node(2);
+    head->next->next = new Node(3);
+    head->next->next->next = new Node(4);
+    head->next->next->next->next = new Node(5);
+    // head->next->next->next->next->next = new Node(6);
     Solution sol;
     SolutionBruteForce sbf;
 
@@ -947,7 +986,7 @@ int main()
     // Original list
     cout << "Original List: ";
     sol.printList(head);
-    head = sol.addOneRecursive(head);
+    head = sol.reverseKGroup(head, 2);
 
     cout << "List after operation: ";
     sol.printList(head);
