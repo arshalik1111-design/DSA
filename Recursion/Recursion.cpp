@@ -1,120 +1,49 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void printNRev(int i, int n)
+class Solution
 {
-
-    if (i >= n)
+public:
+    const int INT_MIN_VAL = -2147483648;
+    const int INT_MAX_VAL = 2147483647;
+    int helper(int i, long long sign, long long num, string &s)
     {
-        return;
-    }
-
-    cout << n - i << " ";
-    printNRev(i + 1, n);
-}
-void printNBT(int i, int n)
-{
-    if (i < 1)
-    {
-        return;
-    }
-    printNBT(i - 1, n);
-    cout << i << " ";
-}
-void printNBtRev(int i, int n)
-{
-    if (i > n)
-    {
-        return;
-    }
-    printNBtRev(i + 1, n);
-    cout << i << " ";
-}
-void sumOfNParameterized(int i, int sum)
-{
-    if (i < 1)
-    {
-        cout << sum << " ";
-        return;
-    }
-    sumOfNParameterized(i - 1, sum + i);
-}
-int SumofNFunctional(int n)
-{
-
-    if (n == 0)
-    {
-        return 0;
-    }
-    else
-    {
-        return n + SumofNFunctional(n - 1);
-    }
-}
-
-int NFactorial(int n)
-{
-    if (n == 0)
-    {
-        return 1;
-    }
-    else
-    {
-        return n * NFactorial(n - 1);
-    }
-}
-
-void reverseAnArrayTwoP(vector<int> &arr, int l, int r)
-{
-    if (l >= r)
-    {
-        return;
-    }
-    swap(arr[l], arr[r]);
-    reverseAnArrayTwoP(arr, l + 1, r - 1);
-}
-
-void revArrOnePnt(vector<int> &arr, int i)
-{
-    int n = arr.size();
-    if (i >= n / 2)
-    {
-        return;
-    }
-    swap(arr[i], arr[n - i - 1]);
-    revArrOnePnt(arr, i + 1);
-}
-
-int Fibonacci(int n)
-{
-
-    if (n <= 1)
-    {
-        return n;
-    }
-
-    return Fibonacci(n - 1) + Fibonacci(n - 2);
-}
-int query(int n, int arr[])
-{
-    int cnt = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (arr[i] == n)
+        if (i >= s.size() || !isdigit(s[i]))
         {
-            cnt++;
+            return num * sign;
         }
+        num = (num * 10) + (s[i] - '0');
+        if (sign * num >= INT_MAX_VAL)
+            return INT_MAX_VAL;
+        if (sign * num <= INT_MIN_VAL)
+            return INT_MIN_VAL;
+
+        return helper(i + 1, sign, num, s);
     }
-    return cnt;
-}
-// void countFrequencyOfEachElement()
-// {
-// }
+
+    int atoi(string s)
+    {
+        int i = 0;
+        int n = s.length();
+        while (i < n && s[i] == ' ')
+        {
+            i++;
+        }
+        long long sign = 1;
+        if (i < n && (s[i] == '+' || s[i] == '-'))
+        {
+            sign = (s[i] == '-') ? -1 : 1;
+            i++;
+        }
+        return helper(i, sign, 0, s);
+    }
+};
 
 int main()
 {
-    int arr[] = {2, 6, 2, 4, 5, 2, 6};
-    int n;
-    cin >> n;
-    cout << query(n, arr) << " ";
+    string s;
+    cin >> s;
+    Solution sol;
+    int ans = sol.atoi(s);
+    cout << ans;
 }
