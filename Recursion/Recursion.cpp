@@ -4,6 +4,7 @@ using namespace std;
 class Solution
 {
 public:
+    // Leetcode 8. String to Integer (atoi)
     const int INT_MIN_VAL = -2147483648;
     const int INT_MAX_VAL = 2147483647;
     int helper(int i, long long sign, long long num, string &s)
@@ -37,13 +38,30 @@ public:
         }
         return helper(i, sign, 0, s);
     }
+
+    // Leetcode 50. Pow(x, n)
+
+    double myPow(double x, double n)
+    {
+        int ans = 1;
+        if (n < 0)
+        {
+            x = 1 / x;
+            n = -n;
+        }
+        for (int i = 0; i < n; i++)
+        {
+            ans = ans * x;
+        }
+        return ans;
+    }
 };
 
 int main()
 {
-    string s;
-    cin >> s;
+    // string s;
+    // cin >> s;
     Solution sol;
-    int ans = sol.atoi(s);
+    double ans = sol.myPow(2.0000, 0);
     cout << ans;
 }
