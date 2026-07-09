@@ -1,6 +1,25 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+class SolutionBruteForce
+{
+public:
+    double myPow(double x, double n)
+    {
+        // Time Complexity : O(N) , Space Complexity: O(1)
+        int ans = 1;
+        if (n < 0)
+        {
+            x = 1 / x;
+            n = -n;
+        }
+        for (int i = 0; i < n; i++)
+        {
+            ans = ans * x;
+        }
+        return ans;
+    }
+};
 class Solution
 {
 public:
@@ -41,19 +60,30 @@ public:
 
     // Leetcode 50. Pow(x, n)
 
+    double power(double x, long n)
+    {
+
+        if (n == 0)
+            return 1.0;
+        if (n == 1)
+            return x;
+
+        if (n % 2 == 0)
+        {
+            return power(x * x, n / 2);
+        }
+        return x * power(x, n - 1);
+    }
     double myPow(double x, double n)
     {
-        int ans = 1;
-        if (n < 0)
+        // Optimal Approach
+        // Time Complexity : O(N) , Space Complexity: O(1)
+        int num = n;
+        if (num < 0)
         {
-            x = 1 / x;
-            n = -n;
+            return (1.0 / power(x, -1 * num));
         }
-        for (int i = 0; i < n; i++)
-        {
-            ans = ans * x;
-        }
-        return ans;
+        return power(x, n);
     }
 };
 
@@ -62,6 +92,6 @@ int main()
     // string s;
     // cin >> s;
     Solution sol;
-    double ans = sol.myPow(2.0000, 0);
+    double ans = sol.myPow(2.0000, 6);
     cout << ans;
 }
