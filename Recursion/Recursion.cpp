@@ -19,6 +19,31 @@ public:
         }
         return ans;
     }
+
+    // Leetcode 1922. Count Good Numbers
+    const int mod = 1e9 + 7;
+    int countGoodNumbers(int index, long long n)
+    {
+        // It will give TLE for bigger inputs
+        if (index == n)
+            return 1;
+        int result = 0;
+        if (index % 2 == 0)
+        {
+            for (int num : {0, 2, 4, 6, 8})
+            {
+                result = (result + countGoodNumbers(index + 1, n) % mod);
+            }
+        }
+        else
+        {
+            for (int num : {2, 3, 5, 7})
+            {
+                result = (result + countGoodNumbers(index + 1, n) % mod);
+            }
+        }
+        return result;
+    }
 };
 class Solution
 {
@@ -85,6 +110,38 @@ public:
         }
         return power(x, n);
     }
+
+    const int mod = 1e9 + 7;
+
+    long long powerII(long long x, long long y)
+    {
+        if (y == 0)
+            return 1;
+        if (y == 1)
+            return x;
+
+        long long half = powerII(x, y / 2) % mod;
+
+        if (y % 2 == 0)
+        {
+            return (half * half) % mod;
+        }
+        else
+        {
+            return (x * ((half * half) % mod)) % mod;
+        }
+    }
+    int countGoodNumbers(long long n)
+    {
+        //    Optimal Solution
+
+        long long primes = n / 2;
+        long long evens = n - primes;
+
+        long long evenChoices = powerII(5, evens);
+        long long oddChoices = powerII(4, primes);
+        return (evenChoices * oddChoices) % mod;
+    }
 };
 
 int main()
@@ -92,6 +149,6 @@ int main()
     // string s;
     // cin >> s;
     Solution sol;
-    double ans = sol.myPow(2.0000, 6);
+    long long ans = sol.countGoodNumbers(4);
     cout << ans;
 }
