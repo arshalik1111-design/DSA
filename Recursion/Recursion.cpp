@@ -142,13 +142,52 @@ public:
         long long oddChoices = powerII(4, primes);
         return (evenChoices * oddChoices) % mod;
     }
+
+    //  Add '&' to pass st by reference
+    void insert(stack<int> &st, int temp)
+    {
+        // Base case: if the stack is empty or temp is larger than the top element
+        if (st.empty() || st.top() <= temp)
+        {
+            st.push(temp);
+            return;
+        }
+
+        int val = st.top();
+        st.pop();
+        insert(st, temp);
+        st.push(val);
+    }
+    void sortStack(stack<int> &st)
+    {
+
+        if (!st.empty())
+        {
+            int temp = st.top();
+            st.pop();
+            sortStack(st);
+
+            insert(st, temp);
+        }
+    }
 };
 
 int main()
 {
-    // string s;
-    // cin >> s;
+    stack<int> s;
+    s.push(4);
+    s.push(1);
+    s.push(3);
+    s.push(2);
     Solution sol;
-    long long ans = sol.countGoodNumbers(4);
-    cout << ans;
+
+    sol.sortStack(s);
+
+    cout << "Sorted stack (descending order): ";
+    while (!s.empty())
+    {
+        cout << s.top() << " ";
+        s.pop();
+    }
+    return 0;
 }
