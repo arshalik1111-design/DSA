@@ -195,24 +195,50 @@ public:
             reverse(st, temp);
         }
     }
+
+    void generateBinaryStrings(int n, string curr, vector<string> &result)
+    {
+        if (curr.length() == n)
+        {
+            result.push_back(curr);
+            return;
+        }
+
+        generateBinaryStrings(n, curr + '0', result);
+
+        if (curr.empty() || curr.back() != '1')
+        {
+            generateBinaryStrings(n, curr + '1', result);
+        }
+    }
 };
 
 int main()
 {
-    stack<int> s;
-    s.push(4);
-    s.push(1);
-    s.push(3);
-    s.push(2);
+    // stack<int> s;
+    // s.push(4);
+    // s.push(1);
+    // s.push(3);
+    // s.push(2);
+
+    int n = 3;
+
+    vector<string> result;
+
     Solution sol;
 
-    sol.reverseStack(s);
+    sol.generateBinaryStrings(n, "", result);
 
-    cout << "Sorted stack (descending order): ";
-    while (!s.empty())
+    for (auto it : result)
     {
-        cout << s.top() << " ";
-        s.pop();
+        cout << it << ", ";
     }
+
+    // cout << "Sorted stack (descending order): ";
+    // while (!s.empty())
+    // {
+    //     cout << s.top() << " ";
+    //     s.pop();
+    // }
     return 0;
 }
