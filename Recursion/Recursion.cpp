@@ -170,6 +170,31 @@ public:
             insert(st, temp);
         }
     }
+
+    void reverse(stack<int> &st, int temp)
+    {
+        if (st.empty())
+        {
+            st.push(temp);
+            return;
+        }
+        int val = st.top();
+        st.pop();
+        reverse(st, temp);
+
+        st.push(val);
+    }
+    void reverseStack(stack<int> &st)
+    {
+        if (!st.empty())
+        {
+            int temp = st.top();
+            st.pop();
+            reverseStack(st);
+
+            reverse(st, temp);
+        }
+    }
 };
 
 int main()
@@ -181,7 +206,7 @@ int main()
     s.push(2);
     Solution sol;
 
-    sol.sortStack(s);
+    sol.reverseStack(s);
 
     cout << "Sorted stack (descending order): ";
     while (!s.empty())
