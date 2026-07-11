@@ -44,6 +44,40 @@ public:
         }
         return result;
     }
+
+    // Leetcode 22. Generate Parentheses
+
+    bool isValid(string s)
+    {
+        int balance = 0;
+        for (char c : s)
+        {
+            if (c == '(')
+            {
+                balance++;
+            }
+            else
+            {
+                balance--;
+            }
+            if (balance < 0)
+                return false;
+        }
+        return balance == 0;
+    }
+    void generateParenthesis(int n, string curr, vector<string> &result)
+    {
+        if (curr.length() == 2 * n)
+        {
+            if (isValid(curr))
+            {
+                result.push_back(curr);
+            }
+            return;
+        }
+        generateParenthesis(n, curr + '(', result);
+        generateParenthesis(n, curr + ')', result);
+    }
 };
 class Solution
 {
@@ -211,6 +245,23 @@ public:
             generateBinaryStrings(n, curr + '1', result);
         }
     }
+
+    bool isValid(string s)
+    {
+        }
+    void generateParenthesis(int n, string curr, vector<string> &result)
+    {
+        if (curr.length() == 2 * n)
+        {
+            if (isValid(curr))
+            {
+                result.push_back(curr);
+            }
+            return;
+        }
+        generateParenthesis(n, curr + '(', result);
+        generateParenthesis(n, curr + ')', result);
+    }
 };
 
 int main()
@@ -222,12 +273,11 @@ int main()
     // s.push(2);
 
     int n = 3;
-
     vector<string> result;
 
     Solution sol;
 
-    sol.generateBinaryStrings(n, "", result);
+    sol.generateParenthesis(n, "", result);
 
     for (auto it : result)
     {
