@@ -246,21 +246,21 @@ public:
         }
     }
 
-    bool isValid(string s)
-    {
-        }
-    void generateParenthesis(int n, string curr, vector<string> &result)
+    void generateParenthesis(int n, int opencount, int closeCount, string curr, vector<string> &result)
     {
         if (curr.length() == 2 * n)
         {
-            if (isValid(curr))
-            {
-                result.push_back(curr);
-            }
+            result.push_back(curr);
             return;
         }
-        generateParenthesis(n, curr + '(', result);
-        generateParenthesis(n, curr + ')', result);
+        if (opencount < n)
+        {
+            generateParenthesis(n, opencount + 1, closeCount, curr + '(', result);
+        }
+        if (closeCount < opencount)
+        {
+            generateParenthesis(n, opencount, closeCount + 1, curr + ')', result);
+        }
     }
 };
 
@@ -272,16 +272,16 @@ int main()
     // s.push(3);
     // s.push(2);
 
-    int n = 3;
+    int n = 2;
     vector<string> result;
 
     Solution sol;
 
-    sol.generateParenthesis(n, "", result);
+    sol.generateParenthesis(n, 0, 0, "", result);
 
     for (auto it : result)
     {
-        cout << it << ", ";
+        cout << it << " ";
     }
 
     // cout << "Sorted stack (descending order): ";
