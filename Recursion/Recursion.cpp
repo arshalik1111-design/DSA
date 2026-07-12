@@ -281,6 +281,26 @@ public:
         }
         return subsequences;
     }
+
+    void SubSequenceHelper(int i, string curr, string &str, vector<string> &res)
+    {
+
+        if (i == str.size())
+        {
+            res.push_back(curr);
+            return;
+        }
+
+        SubSequenceHelper(i + 1, curr, str, res);
+        SubSequenceHelper(i + 1, curr + str[i], str, res);
+    }
+    vector<string> printSubsequenceRecursively(string str)
+    {
+        vector<string> res;
+        string curr = "";
+        SubSequenceHelper(0, curr, str, res);
+        return res;
+    }
 };
 
 int main()
@@ -296,7 +316,7 @@ int main()
     string s = "abc";
     Solution sol;
 
-    vector<string> result = sol.printSubsequence(s);
+    vector<string> result = sol.printSubsequenceRecursively(s);
 
     for (auto it : result)
     {
