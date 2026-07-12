@@ -262,6 +262,25 @@ public:
             generateParenthesis(n, opencount, closeCount + 1, curr + ')', result);
         }
     }
+
+    vector<string> printSubsequence(string s)
+    {
+        int n = s.length();
+        vector<string> subsequences;
+        for (int i = 0; i < 1 << n; i++)
+        {
+            string subseq = "";
+            for (int j = 0; j < n; j++)
+            {
+                if (i & (1 << j))
+                {
+                    subseq += s[j];
+                }
+            }
+            subsequences.push_back(subseq);
+        }
+        return subsequences;
+    }
 };
 
 int main()
@@ -273,15 +292,15 @@ int main()
     // s.push(2);
 
     int n = 2;
-    vector<string> result;
-
+    // vector<string> result;
+    string s = "abc";
     Solution sol;
 
-    sol.generateParenthesis(n, 0, 0, "", result);
+    vector<string> result = sol.printSubsequence(s);
 
     for (auto it : result)
     {
-        cout << it << " ";
+        cout << "\"" << it << "\"" << endl;
     }
 
     // cout << "Sorted stack (descending order): ";
