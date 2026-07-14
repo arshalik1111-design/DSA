@@ -326,6 +326,28 @@ public:
     {
         return countSubsequences(0, 0, k, arr);
     }
+
+    bool checkSubSequenceSum(int index, int current_sum, int k, vector<int> &arr)
+    {
+        if (index == arr.size())
+        {
+            return current_sum == k;
+        }
+        if (checkSubSequenceSum(index + 1, current_sum, k, arr))
+        {
+            return true;
+        }
+        if (checkSubSequenceSum(index + 1, current_sum + arr[index], k, arr))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    bool CheckIfThereExistsASubsequenceWithSumK(vector<int> arr, int k)
+    {
+        return checkSubSequenceSum(0, 0, k, arr);
+    }
 };
 
 int main()
@@ -341,10 +363,10 @@ int main()
     // string s = "abc";
 
     vector<int> arr = {4, 9, 2, 5, 1};
-    int sum = 10;
+    int sum = 100;
     Solution sol;
 
-    int result = sol.CountAllSubSequencesWithSumK(arr, sum);
+    bool result = sol.CheckIfThereExistsASubsequenceWithSumK(arr, sum);
     cout << result;
     // for (auto it : result)
     // {
