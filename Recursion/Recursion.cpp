@@ -301,6 +301,31 @@ public:
         SubSequenceHelper(0, curr, str, res);
         return res;
     }
+
+    int countSubsequences(int index, int current_sum, int target, vector<int> &arr)
+    {
+        if (index == arr.size())
+        {
+            if (current_sum == target)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        int exclude_Path = countSubsequences(index + 1, current_sum, target, arr);
+        int include_Path = countSubsequences(index + 1, current_sum + arr[index], target, arr);
+
+        return exclude_Path + include_Path;
+    }
+
+    int CountAllSubSequencesWithSumK(vector<int> arr, int k)
+    {
+        return countSubsequences(0, 0, k, arr);
+    }
 };
 
 int main()
@@ -311,17 +336,20 @@ int main()
     // s.push(3);
     // s.push(2);
 
-    int n = 2;
+    // int n = 2;
     // vector<string> result;
-    string s = "abc";
+    // string s = "abc";
+
+    vector<int> arr = {4, 9, 2, 5, 1};
+    int sum = 10;
     Solution sol;
 
-    vector<string> result = sol.printSubsequenceRecursively(s);
-
-    for (auto it : result)
-    {
-        cout << "\"" << it << "\"" << endl;
-    }
+    int result = sol.CountAllSubSequencesWithSumK(arr, sum);
+    cout << result;
+    // for (auto it : result)
+    // {
+    //     cout << "\"" << it << "\"" << endl;
+    // }
 
     // cout << "Sorted stack (descending order): ";
     // while (!s.empty())
