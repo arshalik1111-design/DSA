@@ -431,16 +431,38 @@ public:
         sort(sequences.begin(), sequences.end());
         return sequences;
     }
+
+    // Subset Sum Recursively
+
+    void findSubsetSum(int index, vector<int> &ans, vector<int> &nums, int sum)
+    {
+        if (index == nums.size())
+        {
+            ans.push_back(sum);
+            return;
+        }
+        findSubsetSum(index + 1, ans, nums, sum + nums[index]);
+        findSubsetSum(index + 1, ans, nums, sum);
+    }
+    vector<int> subsetSumUsingRecursion(vector<int> nums)
+    {
+        vector<int> ans;
+
+        findSubsetSum(0, ans, nums, 0);
+
+        sort(ans.begin(), ans.end());
+        return ans;
+    }
 };
 
 int main()
 {
 
-    vector<int> arr = {5, 2, 1};
+    vector<int> arr = {3, 2, 1};
     int sum = 8;
     Solution sol;
 
-    vector<int> result = sol.subsetSum(arr);
+    vector<int> result = sol.subsetSumUsingRecursion(arr);
 
     for (auto it : result)
     {
