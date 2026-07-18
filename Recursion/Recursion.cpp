@@ -348,30 +348,54 @@ public:
     {
         return checkSubSequenceSum(0, 0, k, arr);
     }
+
+    void findCombinations(int index, int target, vector<int> &arr, vector<vector<int>> &ans, vector<int> &ds)
+    {
+        // Base Case: if index == arr.size() i.e. we have traversed all the elements we check if current combination is equal to target
+        if (index == arr.size())
+        {
+            if (target == 0)
+            {
+                ans.push_back(ds);
+            }
+            return;
+        }
+
+        if (arr[index] <= target)
+        {
+            ds.push_back(arr[index]);
+            findCombinations(index, target - arr[index], arr, ans, ds);
+            ds.pop_back();
+        }
+        findCombinations(index + 1, target, arr, ans, ds);
+    }
+    vector<vector<int>> CombinationSum(vector<int> candidates, int target)
+    {
+        vector<vector<int>> ans;
+        vector<int> ds;
+
+        findCombinations(0, target, candidates, ans, ds);
+        return ans;
+    }
 };
 
 int main()
 {
-    // stack<int> s;
-    // s.push(4);
-    // s.push(1);
-    // s.push(3);
-    // s.push(2);
 
-    // int n = 2;
-    // vector<string> result;
-    // string s = "abc";
-
-    vector<int> arr = {4, 9, 2, 5, 1};
-    int sum = 100;
+    vector<int> arr = {2, 3, 6, 7};
+    int sum = 7;
     Solution sol;
 
-    bool result = sol.CheckIfThereExistsASubsequenceWithSumK(arr, sum);
-    cout << result;
-    // for (auto it : result)
-    // {
-    //     cout << "\"" << it << "\"" << endl;
-    // }
+    vector<vector<int>> result = sol.CombinationSum(arr, sum);
+    cout << "Combinations are: " << endl;
+    for (int i = 0; i < result.size(); i++)
+    {
+        for (int j = 0; j < result[i].size(); j++)
+        {
+            cout << result[i][j] << " "; // Print each element of the combination
+        }
+        cout << endl; // Print a newline after each combination
+    }
 
     // cout << "Sorted stack (descending order): ";
     // while (!s.empty())
