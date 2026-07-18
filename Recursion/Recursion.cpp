@@ -409,6 +409,26 @@ public:
         findCombinationsII(0, target, candidates, ans, ds);
         return ans;
     }
+    vector<vector<int>> subset(vector<int> &nums)
+    {
+
+        int n = nums.size();
+        vector<vector<int>> sequences;
+        for (int i = 0; i < 1 << n; i++)
+        {
+            vector<int> subsets;
+            for (int j = 0; j < n; j++)
+            {
+                if (i & (1 << j))
+                {
+                    subsets.push_back(nums[j]);
+                }
+            }
+            sequences.push_back(subsets);
+        }
+        sort(sequences.begin(), sequences.end());
+        return sequences;
+    }
 
     vector<int> subsetSum(vector<int> nums)
     {
@@ -432,51 +452,65 @@ public:
         return sequences;
     }
 
-    // Subset Sum Recursively
+    // Find Subsets
 
-    void findSubsetSum(int index, vector<int> &ans, vector<int> &nums, int sum)
+    // Subset Sum Recursively
+    void findSubsetSumRecursively(int index, vector<int> &ans, vector<int> &nums, int sum)
     {
         if (index == nums.size())
         {
             ans.push_back(sum);
             return;
         }
-        findSubsetSum(index + 1, ans, nums, sum + nums[index]);
-        findSubsetSum(index + 1, ans, nums, sum);
+        findSubsetSumRecursively(index + 1, ans, nums, sum + nums[index]);
+        findSubsetSumRecursively(index + 1, ans, nums, sum);
     }
     vector<int> subsetSumUsingRecursion(vector<int> nums)
     {
         vector<int> ans;
 
-        findSubsetSum(0, ans, nums, 0);
+        findSubsetSumRecursively(0, ans, nums, 0);
 
         sort(ans.begin(), ans.end());
         return ans;
+    }
+
+    void SubsetIIHelper(int index, vector<int> &nums, set<vector<int>> &result, vector<int> &ds)
+    {
+        if (index == nums.size())
+        {
+            result.insert(ds);
+            return;
+        }
+        ds.push_back(nums[index]);
+    }
+    vector<vector<int>> subsetII(vector<int> nums)
+    {
     }
 };
 
 int main()
 {
 
-    vector<int> arr = {3, 2, 1};
+    vector<int> arr = {1, 2, 2};
     int sum = 8;
     Solution sol;
 
-    vector<int> result = sol.subsetSumUsingRecursion(arr);
+    vector<vector<int>> result = sol.subsetII(arr);
 
-    for (auto it : result)
-    {
-        cout << it << " ";
-    }
-    // cout << "Combinations are: " << endl;
-    // for (int i = 0; i < result.size(); i++)
+    // for (auto it : result)
     // {
-    //     for (int j = 0; j < result[i].size(); j++)
-    //     {
-    //         cout << result[i][j] << " "; // Print each element of the combination
-    //     }
-    //     cout << endl; // Print a newline after each combination
+    //     cout << it << " ";
     // }
+    // cout << "Combinations are: " << endl;
+    for (int i = 0; i < result.size(); i++)
+    {
+        for (int j = 0; j < result[i].size(); j++)
+        {
+            cout << result[i][j] << " "; // Print each element of the combination
+        }
+        cout << endl; // Print a newline after each combination
+    }
 
     // cout << "Sorted stack (descending order): ";
     // while (!s.empty())
