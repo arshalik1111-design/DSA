@@ -78,6 +78,28 @@ public:
         generateParenthesis(n, curr + '(', result);
         generateParenthesis(n, curr + ')', result);
     }
+
+    void SubsetIIHelper(int index, vector<int> &nums, set<vector<int>> &result, vector<int> &ds)
+    {
+        if (index == nums.size())
+        {
+            result.insert(ds);
+            return;
+        }
+        ds.push_back(nums[index]);
+
+        SubsetIIHelper(index + 1, nums, result, ds);
+        ds.pop_back();
+        SubsetIIHelper(index + 1, nums, result, ds);
+    }
+    vector<vector<int>> subsetII(vector<int> nums)
+    {
+        set<vector<int>> result;
+        vector<int> ds;
+        SubsetIIHelper(0, nums, result, ds);
+        vector<vector<int>> newArr(result.begin(), result.end());
+        return newArr;
+    }
 };
 class Solution
 {
@@ -495,8 +517,9 @@ int main()
     vector<int> arr = {1, 2, 2};
     int sum = 8;
     Solution sol;
+    SolutionBruteForce sbf;
 
-    vector<vector<int>> result = sol.subsetII(arr);
+    vector<vector<int>> result = sbf.subsetII(arr);
 
     // for (auto it : result)
     // {
