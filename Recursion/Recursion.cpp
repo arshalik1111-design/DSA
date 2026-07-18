@@ -377,16 +377,47 @@ public:
         findCombinations(0, target, candidates, ans, ds);
         return ans;
     }
+
+    void findCombinationsII(int index, int target, vector<int> &arr, vector<vector<int>> &ans, vector<int> &ds)
+    {
+        if (target == 0)
+        {
+            ans.push_back(ds);
+            return;
+        }
+
+        for (int i = index; i < arr.size(); i++)
+        {
+
+            if (i > index && arr[i] == arr[i - 1])
+                continue;
+
+            if (arr[i] > target)
+                break;
+            ds.push_back(arr[i]);
+            findCombinationsII(i + 1, target - arr[i], arr, ans, ds);
+            ds.pop_back();
+        }
+    }
+
+    vector<vector<int>> CombinationSumII(vector<int> candidates, int target)
+    {
+        sort(candidates.begin(), candidates.end());
+        vector<vector<int>> ans;
+        vector<int> ds;
+        findCombinationsII(0, target, candidates, ans, ds);
+        return ans;
+    }
 };
 
 int main()
 {
 
-    vector<int> arr = {2, 3, 6, 7};
-    int sum = 7;
+    vector<int> arr = {10, 1, 2, 7, 6, 1, 5};
+    int sum = 8;
     Solution sol;
 
-    vector<vector<int>> result = sol.CombinationSum(arr, sum);
+    vector<vector<int>> result = sol.CombinationSumII(arr, sum);
     cout << "Combinations are: " << endl;
     for (int i = 0; i < result.size(); i++)
     {
