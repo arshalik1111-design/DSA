@@ -401,6 +401,7 @@ public:
     }
 
     vector<vector<int>> CombinationSumII(vector<int> candidates, int target)
+
     {
         sort(candidates.begin(), candidates.end());
         vector<vector<int>> ans;
@@ -408,25 +409,52 @@ public:
         findCombinationsII(0, target, candidates, ans, ds);
         return ans;
     }
+
+    vector<int> subsetSum(vector<int> nums)
+    {
+        int n = nums.size();
+        vector<int> sequences;
+        for (int i = 0; i < (1 << n); i++)
+        {
+            int sum = 0;
+
+            vector<int> arr;
+            for (int j = 0; j < n; j++)
+            {
+                if (i & (1 << j))
+                {
+                    sum += nums[j];
+                }
+            }
+            sequences.push_back(sum);
+        }
+        sort(sequences.begin(), sequences.end());
+        return sequences;
+    }
 };
 
 int main()
 {
 
-    vector<int> arr = {10, 1, 2, 7, 6, 1, 5};
+    vector<int> arr = {5, 2, 1};
     int sum = 8;
     Solution sol;
 
-    vector<vector<int>> result = sol.CombinationSumII(arr, sum);
-    cout << "Combinations are: " << endl;
-    for (int i = 0; i < result.size(); i++)
+    vector<int> result = sol.subsetSum(arr);
+
+    for (auto it : result)
     {
-        for (int j = 0; j < result[i].size(); j++)
-        {
-            cout << result[i][j] << " "; // Print each element of the combination
-        }
-        cout << endl; // Print a newline after each combination
+        cout << it << " ";
     }
+    // cout << "Combinations are: " << endl;
+    // for (int i = 0; i < result.size(); i++)
+    // {
+    //     for (int j = 0; j < result[i].size(); j++)
+    //     {
+    //         cout << result[i][j] << " "; // Print each element of the combination
+    //     }
+    //     cout << endl; // Print a newline after each combination
+    // }
 
     // cout << "Sorted stack (descending order): ";
     // while (!s.empty())
