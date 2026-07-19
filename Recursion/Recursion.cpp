@@ -518,6 +518,40 @@ public:
         SubsetIIHelper(0, nums, result, ds);
         return result;
     }
+
+    void helperCombinationSumIII(int sum, int last, int k, vector<vector<int>> &res, vector<int> &nums)
+
+    {
+        if (sum == 0 && nums.size() == k)
+        {
+            res.push_back(nums);
+            return;
+        }
+        if (sum <= 0 || nums.size() > k)
+            return;
+
+        for (int i = last; i <= 9; i++)
+        {
+
+            if (i <= sum)
+            {
+                nums.push_back(i);
+                helperCombinationSumIII(sum - i, i + 1, k, res, nums);
+                nums.pop_back();
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+    vector<vector<int>> combinationSumIII(int k, int n)
+    {
+        vector<vector<int>> res;
+        vector<int> nums;
+        helperCombinationSumIII(n, 1, k, res, nums);
+        return res;
+    }
 };
 
 int main()
@@ -525,10 +559,12 @@ int main()
 
     vector<int> arr = {1, 2, 2};
     int sum = 8;
+    int k = 3;
+    int n = 9;
     Solution sol;
     SolutionBruteForce sbf;
 
-    vector<vector<int>> result = sol.subsetII(arr);
+    vector<vector<int>> result = sol.combinationSumIII(k, n);
 
     // for (auto it : result)
     // {
