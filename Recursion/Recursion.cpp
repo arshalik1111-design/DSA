@@ -497,17 +497,26 @@ public:
         return ans;
     }
 
-    void SubsetIIHelper(int index, vector<int> &nums, set<vector<int>> &result, vector<int> &ds)
+    void SubsetIIHelper(int index, vector<int> &nums, vector<vector<int>> &result, vector<int> &ds)
     {
-        if (index == nums.size())
+        result.push_back(ds);
+
+        for (int i = index; i < nums.size(); i++)
         {
-            result.insert(ds);
-            return;
+            if (i > index && nums[i] == nums[i - 1])
+                continue;
+            ds.push_back(nums[index]);
+            SubsetIIHelper(i + 1, nums, result, ds);
+            ds.pop_back();
         }
-        ds.push_back(nums[index]);
     }
     vector<vector<int>> subsetII(vector<int> nums)
     {
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> result;
+        vector<int> ds;
+        SubsetIIHelper(0, nums, result, ds);
+        return result;
     }
 };
 
@@ -519,7 +528,7 @@ int main()
     Solution sol;
     SolutionBruteForce sbf;
 
-    vector<vector<int>> result = sbf.subsetII(arr);
+    vector<vector<int>> result = sol.subsetII(arr);
 
     // for (auto it : result)
     // {
