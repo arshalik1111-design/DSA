@@ -552,6 +552,34 @@ public:
         helperCombinationSumIII(n, 1, k, res, nums);
         return res;
     }
+
+    void helperLetterCombinations(int index, string combos[], string s, vector<string> &ans, string digits)
+    {
+        if (index == digits.size())
+        {
+            ans.push_back(s);
+            return;
+        }
+
+        int digit = digits[index] - '0';
+
+        for (int i = 0; i < combos[digit].size(); i++)
+        {
+            s.push_back(combos[digit][i]);
+            helperLetterCombinations(index + 1, combos, s, ans, digits);
+            s.pop_back();
+        }
+    }
+    vector<string> letterCombinations(string digits)
+    {
+        string combos[] = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+
+        vector<string> ans;
+        string s = "";
+
+        helperLetterCombinations(0, combos, s, ans, digits);
+        return ans;
+    }
 };
 
 int main()
@@ -563,22 +591,26 @@ int main()
     int n = 9;
     Solution sol;
     SolutionBruteForce sbf;
+    string digits = "23";
+    vector<string> result = sol.letterCombinations(digits);
 
-    vector<vector<int>> result = sol.combinationSumIII(k, n);
-
+    for (const string &combination : result)
+    {
+        cout << combination << " ";
+    }
     // for (auto it : result)
     // {
     //     cout << it << " ";
     // }
     // cout << "Combinations are: " << endl;
-    for (int i = 0; i < result.size(); i++)
-    {
-        for (int j = 0; j < result[i].size(); j++)
-        {
-            cout << result[i][j] << " "; // Print each element of the combination
-        }
-        cout << endl; // Print a newline after each combination
-    }
+    // for (int i = 0; i < result.size(); i++)
+    // {
+    //     for (int j = 0; j < result[i].size(); j++)
+    //     {
+    //         cout << result[i][j] << " "; // Print each element of the combination
+    //     }
+    //     cout << endl; // Print a newline after each combination
+    // }
 
     // cout << "Sorted stack (descending order): ";
     // while (!s.empty())
