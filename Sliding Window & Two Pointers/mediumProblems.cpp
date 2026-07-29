@@ -6,7 +6,6 @@ class SolutionBruteForce
 public:
     int lengthOfLongestSubstring(string s)
     {
-
         int maxLength = 0;
         for (int i = 0; i < s.length(); i++)
         {
@@ -27,14 +26,25 @@ public:
 
 class Solution
 {
-
+public:
     int lengthOfLongestSubstring(string s)
     {
-        unordered_map<char, int> mp;
-        int length = 0;
-        for (int i = 0; i < s.length(); i++)
+        int l = 0;
+        int r = 0;
+        int maxLength = 0;
+        vector<int> hash(256, -1);
+        while (r < s.length())
         {
+            if (hash[s[r]] != -1)
+            {
+                l = max(hash[s[r]] + 1, l);
+            }
+            int len = r - l + 1;
+            maxLength = max(maxLength, len);
+            hash[s[r]] = r;
+            r++;
         }
+        return maxLength;
     }
 };
 
@@ -42,7 +52,7 @@ int main()
 {
 
     string s = "abcddabac";
-    SolutionBruteForce sbf;
+    Solution sbf;
     int r = sbf.lengthOfLongestSubstring(s);
     cout << r;
 }
