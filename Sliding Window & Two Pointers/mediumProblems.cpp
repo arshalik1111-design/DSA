@@ -46,6 +46,29 @@ public:
         }
         return maxLen;
     }
+
+    int fruitIntoBaskets(vector<int> fruits)
+    {
+        int n = fruits.size();
+        int maxFruits = 0;
+        for (int i = 0; i < n; i++)
+        {
+            unordered_map<int, int> basket;
+            int currentCount = 0;
+
+            for (int j = i; j < n; j++)
+            {
+                basket[fruits[j]]++;
+                if (basket.size() > 2)
+                {
+                    break;
+                }
+                currentCount++;
+            }
+            maxFruits = max(maxFruits, currentCount);
+        }
+        return maxFruits;
+    }
 };
 
 class Solution
@@ -96,15 +119,38 @@ public:
         }
         return maxLen;
     }
+
+    int fruitIntoBaskets(vector<int> fruits)
+    {
+        int n = fruits.size();
+        int l = 0;
+        int maxFruits = 0;
+        unordered_map<int, int> basket;
+        for (int r = 0; r < n; r++)
+        {
+            basket[fruits[r]]++;
+            while (basket.size() > 2)
+            {
+                basket[fruits[l]]--;
+                if (basket[fruits[l]] == 0)
+                {
+                    basket.erase(fruits[l]);
+                }
+                l++;
+            }
+            maxFruits = max(maxFruits, r - l + 1);
+        }
+        return maxFruits;
+    }
 };
 
 int main()
 {
 
     // string s = "abcddabac";
-    vector<int> nums = {1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0};
+    vector<int> nums = {1, 2, 3, 2, 2};
     int k = 3;
     Solution sbf;
-    int r = sbf.MaxConsecutiveOnesIII(nums, k);
+    int r = sbf.fruitIntoBaskets(nums);
     cout << r;
 }
