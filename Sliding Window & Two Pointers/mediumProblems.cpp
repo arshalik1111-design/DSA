@@ -142,6 +142,41 @@ public:
         }
         return maxFruits;
     }
+
+    int fruitIntoBasketsOptimal(vector<int> fruits)
+    {
+        int maxLen = 0;
+        int lastFruit = -1;
+        int secondLastFruit = -1;
+
+        int currCount = 0;
+        int lastfruitStreak = 0;
+
+        for (int fruit : fruits)
+        {
+            if (fruit == lastFruit || fruit == secondLastFruit)
+            {
+                currCount++;
+            }
+            else
+            {
+                currCount = lastfruitStreak + 1;
+            }
+
+            if (fruit == lastFruit)
+            {
+                lastfruitStreak++;
+            }
+            else
+            {
+                lastfruitStreak = 1;
+                secondLastFruit = lastFruit;
+                lastFruit = fruit;
+            }
+            maxLen = max(maxLen, currCount);
+        }
+        return maxLen;
+    }
 };
 
 int main()
@@ -151,6 +186,6 @@ int main()
     vector<int> nums = {1, 2, 3, 2, 2};
     int k = 3;
     Solution sbf;
-    int r = sbf.fruitIntoBaskets(nums);
+    int r = sbf.fruitIntoBasketsOptimal(nums);
     cout << r;
 }
