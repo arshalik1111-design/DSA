@@ -204,13 +204,24 @@ public:
 
     int characterReplacement(string s, int k)
     {
+        int n = s.length();
         int maxLen = 0;
-        for (int i = 0; i < s.length(); i++)
+        int l = 0;
+        int maxFreq = 0;
+        unordered_map<char, int> freq;
+
+        for (int r = 0; r < n; r++)
         {
-            for (int j = i; j < s.length(); j++)
+            freq[s[r]]++;
+            maxFreq = max(maxFreq, freq[s[r]]);
+            while ((r - l + 1) - maxFreq > k)
             {
+                freq[s[l]]--;
+                l++;
             }
+            maxLen = max(maxLen, r - l + 1);
         }
+        return maxLen;
     }
 };
 
@@ -221,7 +232,7 @@ int main()
     vector<int> nums = {1, 2, 3, 2, 2};
     string s = "BAABAABBBAAA";
     int k = 2;
-    SolutionBruteForce sbf;
+    Solution sbf;
     int r = sbf.characterReplacement(s, k);
     cout << r;
 }
