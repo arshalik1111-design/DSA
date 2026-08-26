@@ -1,6 +1,25 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+class BruteForce
+{
+public:
+    int removeDuplicates(vector<int> &arr, int n)
+    {
+
+        set<int> s;
+        for (int i = 0; i < n; i++)
+        {
+            s.insert(arr[i]);
+        }
+
+        for (auto it : s)
+        {
+            cout << it << " ";
+        }
+    }
+};
+
 class Solution
 {
 public:
@@ -75,20 +94,7 @@ public:
 
     int removeDuplicates(vector<int> &arr, int n)
     {
-        // Brute force
-        //  set<int> s;
-        //  for (int i = 0; i < n; i++)
-        //  {
-        //      s.insert(arr[i]);
-        //  }
-
-        // for (auto it : s)
-        // {
-        //     cout << it << " ";
-        // }
-
         // Optimal Approach-Two Pointers
-
         int j = 1;
         for (int i = 1; i < n; i++)
         {
@@ -319,6 +325,7 @@ public:
         xor1 = xor1 ^ n;
         return xor1 ^ xor2;
     }
+
     int maxCount(vector<int> arr, int n)
     {
         int cnt = 0;
@@ -338,6 +345,7 @@ public:
 
         return maxi;
     }
+
     int getSingleElement(vector<int> arr, int n)
     {
 
@@ -385,6 +393,7 @@ public:
 
         return xorr;
     }
+
     int longestSubArraySum(vector<int> arr, int n, int k)
     {
     }
