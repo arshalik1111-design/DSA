@@ -1,7 +1,7 @@
 #include <bits./stdc++.h>
 using namespace std;
 
-class SolutionBruteForce
+class BruteForce
 {
 public:
     int lengthOfLongestSubstring(string s)
@@ -93,6 +93,27 @@ public:
         }
         return maxLen;
     }
+
+    // Leetcode 930. Binary Subarrays With Sum
+
+    int numSubarraysWithSum(vector<int> &nums, int goal)
+    {
+        int cnt = 0;
+        int n = nums.size();
+        for (int i = 0; i < n; i++)
+        {
+            int sum = 0;
+            for (int j = i; j < n; j++)
+            {
+                sum += nums[j];
+                if (sum == goal)
+                {
+                    cnt++;
+                }
+            }
+        }
+        return cnt;
+    }
 };
 
 class Solution
@@ -117,6 +138,7 @@ public:
         }
         return maxLength;
     }
+    // Leetcode 1004. Max Consecutive Ones III
 
     int MaxConsecutiveOnesIII(vector<int> &nums, int k)
     {
@@ -166,6 +188,7 @@ public:
         }
         return maxFruits;
     }
+    // Leetcode 904. Fruit into Baskets
 
     int fruitIntoBasketsOptimal(vector<int> fruits)
     {
@@ -201,6 +224,7 @@ public:
         }
         return maxLen;
     }
+    // Leetcode 424. Longest Repeating Character Replacement
 
     int characterReplacement(string s, int k)
     {
@@ -223,16 +247,44 @@ public:
         }
         return maxLen;
     }
+
+    // Leetcode 930. Binary Subarrays With Sum
+
+    int numSubarraysWithSum(vector<int> &nums, int goal)
+    {
+        return atMost(nums, goal) - atMost(nums, goal - 1);
+    }
+
+    int atMost(vector<int> nums, int k)
+    {
+        if (k < 0)
+            return 0;
+        int cnt = 0;
+        int left = 0;
+        int n = nums.size();
+        int sum = 0;
+        for (int right = 0; right < n; right++)
+        {
+            sum += nums[right];
+            while (sum > k)
+            {
+                sum -= nums[left];
+                left++;
+            }
+            cnt += (right - left + 1);
+        }
+        return cnt;
+    }
 };
 
 int main()
 {
 
     // string s = "abcddabac";
-    vector<int> nums = {1, 2, 3, 2, 2};
-    string s = "BAABAABBBAAA";
-    int k = 2;
-    Solution sbf;
-    int r = sbf.characterReplacement(s, k);
+    vector<int> nums = {1, 0, 1, 0, 1};
+    // string s = "BAABAABBBAAA";
+    int goal = 2;
+    Solution sol;
+    int r = sol.numSubarraysWithSum(nums, goal);
     cout << r;
 }
