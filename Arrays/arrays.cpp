@@ -23,34 +23,6 @@ public:
 class Solution
 {
 public:
-    // void largestElement(int arr[], int n)
-    // {
-    //     long max = arr[0];
-
-    //     for (int i = 0; i < n; i++)
-    //     {
-    //         if (arr[i] > max)
-    //         {
-    //             max = arr[i];
-    //         }
-    //     }
-
-    //     cout << max;
-    // }
-    // void secondSmallest(int arr[], int n)
-    // {
-
-    //     int largest = arr[0];
-    //     int slargest = -1;
-    //     for (int i = 1; i < n; i++)
-    //     {
-    //         if (arr[i] > largest)
-    //         {
-    //             slargest = largest;
-    //             largest = arr[i];
-    //         }
-    //     }
-    // }
     void secondLargest(int arr[], int n)
     {
 
@@ -1088,59 +1060,8 @@ int main()
     {
         cin >> nums[i];
     }
-    // int k;
-    // cin >> k;
-    // vector<vector<int>> mt = {{1, 2, 3},
-    //                           {4, 5, 6},
-    //                           {7, 8, 9}};
-    // for (int i = 0; i < m; i++)
-    // {
-    //     for (int j = 0; j < n; j++)
-    //     {
-    //         cin >> mt[i][j];
-    //     }
-    // }
 
-    // vector<int> arr2(m);
-    // for (int i = 0; i < m; i++)
-    // {
-    //     cin >> arr2[i];
-    // }
     Solution obj;
-
-    // vector<vector<int>> res = obj.threeSum(nums);
-    // for (auto &it : res)
-    // {
-    //     for (auto &num : it)
-    //     {ṇ
-    //         cout << num << " ";
-    //     }
-    //     cout << endl;
-    // }
-
     int r = obj.searchSingleElement(nums, n);
     cout << r << " ";
-    // vector<vector<int>> rotated = obj.RotateMatrix(mt);
-    // for (auto it : rotated)
-    // {
-    //     for (auto val : it)
-    //     {
-    //         cout << val << " ";
-    //     }
-    //     cout << endl;
-    // }
-    // for (int num : arr)
-    // {
-    //     cout << num << " ";
-    // }
-    // longestSubArraySum(arr, n);
-    // cout << result;
-    // vector<int> Union = obj.FindUnion(arr1, arr2, m, n);
-
-    // for (auto &it : Union)
-    // {
-    //     cout << it << " ";
-    // }
-
-    // cout << LinearSearch(arr, n, k) << " ";
 }
