@@ -95,7 +95,6 @@ public:
     }
 
     // Leetcode 930. Binary Subarrays With Sum
-
     int numSubarraysWithSum(vector<int> &nums, int goal)
     {
         int cnt = 0;
@@ -113,6 +112,35 @@ public:
             }
         }
         return cnt;
+    }
+
+    // Leetcode 1248. Count Number of Nice Subarrays
+    int numberOfSubarrays(vector<int> &nums, int k)
+    {
+        int count = 0;
+        int n = nums.size();
+        for (int start = 0; start < n; start++)
+        {
+            int oddCount = 0;
+
+            for (int end = start; end < n; end++)
+            {
+                if (nums[end] % 2 != 0)
+                {
+                    oddCount++;
+                }
+                if (oddCount > k)
+                {
+                    break;
+                }
+
+                if (oddCount == k)
+                {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 };
 
@@ -138,8 +166,8 @@ public:
         }
         return maxLength;
     }
-    // Leetcode 1004. Max Consecutive Ones III
 
+    // Leetcode 1004. Max Consecutive Ones III
     int MaxConsecutiveOnesIII(vector<int> &nums, int k)
     {
         int n = nums.size();
@@ -249,7 +277,6 @@ public:
     }
 
     // Leetcode 930. Binary Subarrays With Sum
-
     int numSubarraysWithSum(vector<int> &nums, int goal)
     {
         return atMost(nums, goal) - atMost(nums, goal - 1);
@@ -275,16 +302,48 @@ public:
         }
         return cnt;
     }
+
+    // Leetcode 1248. Count Number of Nice Subarrays
+    int numberOfSubarrays(vector<int> &nums, int k)
+    {
+        int count = 0;
+        int n = nums.size();
+        int oddCount = 0;
+        int left = 0;
+
+        for (int right = 0; right < n; right++)
+        {
+
+            if (nums[right] % 2 != 0)
+            { 
+                oddCount++;
+            }
+            if (oddCount > k)
+            {
+                nums[left]--;
+                if (nums[left] == 0)
+                {
+                }
+                left++;
+            }
+
+            if (oddCount == k)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
 };
 
 int main()
 {
 
     // string s = "abcddabac";
-    vector<int> nums = {1, 0, 1, 0, 1};
+    vector<int> nums = {2, 2, 2, 1, 2, 2, 1, 2, 2, 2};
     // string s = "BAABAABBBAAA";
     int goal = 2;
     Solution sol;
-    int r = sol.numSubarraysWithSum(nums, goal);
+    int r = sol.numberOfSubarrays(nums, goal);
     cout << r;
 }
