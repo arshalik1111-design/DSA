@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class BruteForce
+class BruteForce_solution
 {
 public:
     int removeDuplicates(vector<int> &arr, int n)
@@ -18,9 +18,54 @@ public:
             cout << it << " ";
         }
     }
+
+    // Leetcode 560. Subarray Sum Equals K
+    int subarraySum(vector<int> &nums, int k)
+    {
+        int cnt = 0;
+        int n = nums.size();
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = i; j < n; j++)
+            {
+                int sum = accumulate(nums.begin() + i, nums.begin() + j + 1, 0);
+                if (sum == k)
+                    cnt++;
+            }
+        }
+        return cnt;
+    }
 };
 
-class Solution
+class Better_solution
+{
+public:
+    // Leetcode 560. Subarray Sum Equals K
+    int subarraySum(vector<int> &nums, int k)
+    {
+        int cnt = 0;
+        int n = nums.size();
+        int left = 0;
+        int sum = 0;
+
+        for (int right = 0; right < n; right++)
+        {
+            sum += nums[right];
+            while (sum > k)
+            {
+                sum -= nums[left];
+                left++;
+            }
+            if (sum == k)
+            {
+                cnt++;
+            }
+        }
+        return cnt;
+    }
+};
+
+class Optimal_solution
 {
 public:
     void secondLargest(int arr[], int n)
@@ -1047,21 +1092,49 @@ public:
             }
         }
     }
+
+    // Leetcode 560. Subarray Sum Equals K
+    int subarraySum(vector<int> &nums, int k)
+    {
+        int n = nums.size();
+        int count = 0;
+        vector<int> prefixSum(n, 0);
+        prefixSum[0] = nums[0];
+        for (int i = 1; i < n; i++)
+        {
+            prefixSum[i] = prefixSum[i - 1] + nums[i];
+        }
+
+        unordered_map<int, int> mp; // prefixSum,freq
+
+        for (int j = 0; j < n; j++)
+        {
+            if (prefixSum[j] == k)
+            {
+                count++;
+            }
+            int val = prefixSum[j] - k;
+            if (mp.find(val) != mp.end())
+            {
+                count += mp[val];
+            }
+
+            if (mp.find(prefixSum[j]) == mp.end())
+            {
+                mp[prefixSum[j]] = 0;
+            }
+            mp[prefixSum[j]]++;
+        }
+        return count;
+    }
 };
 
 int main()
 {
-    // int m;
-    // cin >> m;
-    int n;
-    cin >> n;
-    vector<int> nums;
-    for (int i = 0; i < n; i++)
-    {
-        cin >> nums[i];
-    }
+    int k = 2;
+    vector<int> nums = {1, 1, 1};
 
-    Solution obj;
-    int r = obj.searchSingleElement(nums, n);
+    Optimal_solution sol;
+    int r = sol.subarraySum(nums, k);
     cout << r << " ";
 }
