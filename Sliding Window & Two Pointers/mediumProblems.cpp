@@ -164,6 +164,31 @@ public:
         }
         return count;
     }
+
+    // Leetcode 1423. Maximum Points You Can Obtain from Cards
+    int maxScore(vector<int> cardPoints, int k)
+    {
+        int n = cardPoints.size();
+        int maxSum = 0;
+        for (int i = 0; i <= k; i++)
+        {
+            int tempSum = 0;
+            // Sum of i elements from start
+            for (int j = 0; j < i; j++)
+            {
+                tempSum += cardPoints[j];
+            }
+            // Sum of k-i elements from back
+
+            for (int j = 0; j < k - i; j++)
+            {
+                tempSum += cardPoints[n - 1 - j];
+            }
+
+            maxSum = max(maxSum, tempSum);
+        }
+        return maxSum;
+    }
 };
 
 class Better_solution
@@ -407,6 +432,14 @@ public:
         vector<int> freq(3, 0);
         for (int r = 0; r < n; r++)
         {
+            freq[s[r] - 'a']++;
+
+            while (freq[0] > 0 && freq[1] > 0 && freq[2] > 0)
+            {
+                res += (n - r);
+                freq[s[left] - 'a']--;
+                left++;
+            }
         }
         return res;
     }
@@ -415,11 +448,11 @@ public:
 int main()
 {
 
-    string s = "abcabc";
-    // vector<int> nums = {1, 0, 1, 0, 1};
+    // string s = "abcabc";
+    vector<int> nums = {1, 2, 3, 4, 5, 6, 1};
     // string s = "BAABAABBBAAA";
     int goal = 2;
     BruteForce sol;
-    int r = sol.numberOfSubstrings(s);
+    int r = sol.maxScore(nums, 3);
     cout << r;
 }
