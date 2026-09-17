@@ -142,9 +142,71 @@ public:
         }
         return count;
     }
+
+    // Leetcode 1358. Number of Substrings Containing All Three Characters
+
+    int numberOfSubstrings(string s)
+    {
+        int count = 0;
+        int n = s.length();
+        for (int i = 0; i < n; i++)
+        {
+            set<char> st;
+            for (int j = i; j < n; j++)
+            {
+                st.insert(s[j]);
+
+                if (st.size() >= 3)
+                {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
 };
 
-class Solution
+class Better_solution
+{
+public:
+    int numSubarraysWithSum(vector<int> &nums, int goal)
+    {
+        int count = 0;
+
+        int n = nums.size();
+
+        vector<int> prefixSum(n, 0);
+        prefixSum[0] = nums[0];
+
+        for (int i = 1; i < n; i++)
+        {
+            prefixSum[i] = prefixSum[i - 1] + nums[i];
+        }
+
+        unordered_map<int, int> mp;
+
+        for (int j = 0; j < n; j++)
+        {
+            if (prefixSum[j] == goal)
+            {
+                count++;
+            }
+            int val = prefixSum[j] - goal;
+            if (mp.find(val) != mp.end())
+            {
+                count += mp[val];
+            }
+            if (mp.find(prefixSum[j]) == mp.end())
+            {
+                mp[prefixSum[j]] = 0;
+            }
+            mp[prefixSum[j]]++;
+        }
+        return count;
+    }
+};
+
+class Optimal_solution
 {
 public:
     int lengthOfLongestSubstring(string s)
@@ -315,7 +377,7 @@ public:
         {
 
             if (nums[right] % 2 != 0)
-            { 
+            {
                 oddCount++;
             }
             if (oddCount > k)
@@ -334,16 +396,30 @@ public:
         }
         return count;
     }
+
+    // Leetcode 1358. Number of Substrings Containing All Three Characters
+
+    int numberOfSubstrings(string s)
+    {
+        int res = 0;
+        int n = s.length();
+        int left = 0;
+        vector<int> freq(3, 0);
+        for (int r = 0; r < n; r++)
+        {
+        }
+        return res;
+    }
 };
 
 int main()
 {
 
-    // string s = "abcddabac";
-    vector<int> nums = {2, 2, 2, 1, 2, 2, 1, 2, 2, 2};
+    string s = "abcabc";
+    // vector<int> nums = {1, 0, 1, 0, 1};
     // string s = "BAABAABBBAAA";
     int goal = 2;
-    Solution sol;
-    int r = sol.numberOfSubarrays(nums, goal);
+    BruteForce sol;
+    int r = sol.numberOfSubstrings(s);
     cout << r;
 }
