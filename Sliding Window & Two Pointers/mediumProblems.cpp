@@ -209,6 +209,25 @@ public:
         }
         return maxLength;
     }
+
+    int subarraysWithKDistinct(vector<int> &nums, int k)
+    {
+        int cnt = 0;
+        int n = nums.size();
+        for (int i = 0; i < n; i++)
+        {
+            set<int> st;
+            for (int j = i; j < n; j++)
+            {
+                st.insert(nums[j]);
+                if (st.size() == k)
+                {
+                    cnt++;
+                }
+            }
+        }
+        return cnt;
+    }
 };
 
 class Better_solution
@@ -520,16 +539,51 @@ public:
         }
         return maxLength;
     }
+
+    // Leetcode 992. Subarrays with K Different Integers
+
+    int subarraysWithKDistinct(vector<int> &nums, int k)
+    {
+        return countAtMostK(nums, k) - countAtMostK(nums, k - 1);
+    }
+
+    int countAtMostK(vector<int> &nums, int k)
+    {
+        int cnt = 0;
+        unordered_map<int, int> freq;
+        int n = nums.size();
+        int l = 0;
+        for (int r = 0; r < n; r++)
+        {
+            if (freq[nums[r]] == 0)
+            {
+                k--;
+            }
+            freq[nums[r]]++;
+
+            while (k < 0)
+            {
+                freq[nums[l]]--;
+                if (freq[nums[l]] == 0)
+                {
+                    k++;
+                }
+                l++;
+            }
+            cnt += (r - l + 1);
+        }
+        return cnt;
+    }
 };
 
 int main()
 {
 
-    string s = "aababbcaacc";
-    // vector<int> nums = {1, 2, 3, 4, 5, 6, 1};
+    // string s = "aababbcaacc";
+    vector<int> nums = {1, 2, 1, 2, 3};
     // string s = "BAABAABBBAAA";
     int goal = 2;
     Optimal_solution sol;
-    int r = sol.longestKSubstr(s, 2);
+    int r = sol.subarraysWithKDistinct(nums, 2);
     cout << r;
 }
