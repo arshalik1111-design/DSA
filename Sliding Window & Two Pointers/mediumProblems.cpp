@@ -495,6 +495,31 @@ public:
         }
         return maxScore;
     }
+
+    int longestKSubstr(string s, int k)
+    {
+        int maxLength = 0;
+        int left = 0;
+        int n = s.length();
+        unordered_map<char, int> freq;
+        for (int right = 0; right < n; right++)
+        {
+            freq[s[right]]++;
+
+            if (freq.size() > k)
+            {
+                freq[s[left]]--;
+
+                if (freq[s[left]] == 0)
+                {
+                    freq.erase(s[left]);
+                }
+                left++;
+            }
+            maxLength = max(maxLength, right - left + 1);
+        }
+        return maxLength;
+    }
 };
 
 int main()
@@ -504,7 +529,7 @@ int main()
     // vector<int> nums = {1, 2, 3, 4, 5, 6, 1};
     // string s = "BAABAABBBAAA";
     int goal = 2;
-    BruteForce sol;
+    Optimal_solution sol;
     int r = sol.longestKSubstr(s, 2);
     cout << r;
 }
