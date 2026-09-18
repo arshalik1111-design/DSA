@@ -443,6 +443,38 @@ public:
         }
         return res;
     }
+
+    // Leetcode 1423. Maximum Points You Can Obtain from Cards
+    int maxScore(vector<int> cardPoints, int k)
+    {
+
+        int n = cardPoints.size();
+        int total = 0;
+        // Sum of first k elements
+
+        for (int i = 0; i < k; i++)
+        {
+            total += cardPoints[i];
+        }
+        // Initial maxScore of first k elements, if it is the maxScore we get
+        // this as answer otherwise we check from back for k elements.
+        int maxScore = total;
+
+        // Move window from front to back k times
+        for (int i = 0; i < k; i++)
+        {
+            // Subtract cards from front
+
+            total -= cardPoints[k - 1 - i];
+            // Add cards from back
+
+            total += cardPoints[n - 1 - i];
+            // update maxScore if needed
+
+            maxScore = max(maxScore, total);
+        }
+        return maxScore;
+    }
 };
 
 int main()
@@ -452,7 +484,7 @@ int main()
     vector<int> nums = {1, 2, 3, 4, 5, 6, 1};
     // string s = "BAABAABBBAAA";
     int goal = 2;
-    BruteForce sol;
+    Optimal_solution sol;
     int r = sol.maxScore(nums, 3);
     cout << r;
 }
