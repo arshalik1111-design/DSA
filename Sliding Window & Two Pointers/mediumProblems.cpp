@@ -189,6 +189,26 @@ public:
         }
         return maxSum;
     }
+
+    int longestKSubstr(string s, int k)
+    {
+        int maxLength = 0;
+        int n = s.length();
+        for (int i = 0; i < n; i++)
+        {
+            set<char> st;
+            for (int j = i; j < n; j++)
+            {
+                st.insert(s[j]);
+
+                if (st.size() <= k)
+                {
+                    maxLength = max(maxLength, j - i + 1);
+                }
+            }
+        }
+        return maxLength;
+    }
 };
 
 class Better_solution
@@ -480,11 +500,11 @@ public:
 int main()
 {
 
-    // string s = "abcabc";
-    vector<int> nums = {1, 2, 3, 4, 5, 6, 1};
+    string s = "aababbcaacc";
+    // vector<int> nums = {1, 2, 3, 4, 5, 6, 1};
     // string s = "BAABAABBBAAA";
     int goal = 2;
-    Optimal_solution sol;
-    int r = sol.maxScore(nums, 3);
+    BruteForce sol;
+    int r = sol.longestKSubstr(s, 2);
     cout << r;
 }
