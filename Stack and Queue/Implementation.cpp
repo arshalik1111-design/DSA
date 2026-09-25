@@ -7,28 +7,28 @@ class ArrayStack
 private:
     vector<int> st;
     int capacity;
-    int top;
+    int topIndex;
 
 public:
     ArrayStack(int cap)
     {
         st.resize(cap);
         capacity = cap;
-        top = -1;
+        topIndex = -1;
     }
 
     void push(int x, vector<string> &output)
     {
         // Stack get's full and have no more capacity
-        if (top == capacity - 1)
+        if (topIndex == capacity - 1)
         {
             output.push_back("Stack Overflow");
             return;
         }
-        // move top one step ahead
-        top = top + 1;
-        // now push the new element at the top index
-        st[top] = x;
+        // move topIndex one step ahead
+        topIndex = topIndex + 1;
+        // now push the new element at the topIndex index
+        st[topIndex] = x;
         // record the successful push action
         output.push_back("Pushed: " + to_string(x));
     }
@@ -36,21 +36,21 @@ public:
     void pop(vector<string> &output)
     {
         // if the stack is empty we cannot pop, it will cause stack underflow
-        if (top == -1)
+        if (topIndex == -1)
         {
             output.push_back("Stack Underflow");
         }
-        top = top - 1;
-        output.push_back("Popped Value: " + to_string(st[top]));
+        topIndex = topIndex - 1;
+        output.push_back("Popped Value: " + to_string(st[topIndex]));
     }
 
     int top()
     {
-        return st[top];
+        return st[topIndex];
     }
     bool isEmpty()
     {
-        return top == -1;
+        return topIndex == -1;
     }
 };
 
@@ -121,6 +121,41 @@ public:
 
     bool isEmpty() { return currSize == 0; }
 };
+
+class Solution
+{
+
+public:
+    // Leetcode 20. Valid Parentheses
+    bool isValid(string s)
+    {
+        int n = s.length();
+        stack<char> st;
+        for (int i = 0; i < n; i++)
+        {
+            if (s[i] == '(' || s[i] == '[' || s[i] == '{')
+            {
+                st.push(s[i]);
+            }
+            else
+            {
+                if (st.empty())
+                    return false;
+                char ch = st.top();
+                if (!((ch == '(' && s[i] == ')') || (ch == '[' && s[i] == ']') || (ch == '{' && s[i] == '}')))
+                {
+                    return false;
+                }
+                st.pop();
+            }
+        }
+        return st.empty();
+    }
+};
 int main()
 {
+    string s = "]";
+    Solution obj;
+    bool res = obj.isValid(s);
+    cout << res;
 }
