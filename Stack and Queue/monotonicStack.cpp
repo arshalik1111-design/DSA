@@ -40,10 +40,9 @@ public:
         int n = nums.size();
         vector<int> ans(n);
         stack<int> st;
-        // Loop twice the size of the array backwards to handle the circular property
+
         for (int i = 2 * n - 1; i >= 0; i--)
         {
-            // Maintain a monotonic decreasing stack (top of stack is the smallest)
             while (!st.empty() && st.top() <= nums[i % n])
             {
                 st.pop();
@@ -57,14 +56,47 @@ public:
         }
         return ans;
     }
+
+    // Leetcode 735. Asteroid Collision
+    vector<int> asteroidCollision(vector<int> &arr)
+    {
+        vector<int> li;
+        int n = arr.size();
+        for (int i = 0; i < n; i++)
+        {
+            // store Positive elements into the list
+            if (arr[i] > 0)
+            {
+                li.push_back(arr[i]);
+            }
+            else
+            {
+                // remove element from the list if arr[i]>st.back(), also the top element in list must be greater than 0.
+                while (!li.empty() && li.back() > 0 && abs(arr[i]) > li.back())
+                {
+                    li.pop_back();
+                }
+                // if both the aesteroids have same absolute value and opposite directions
+                if (!li.empty() && abs(arr[i]) == li.back())
+                {
+                    li.pop_back();
+                }
+                else if (li.empty() || li.back() < 0)
+                {
+                    li.push_back(arr[i]);
+                }
+            }
+        }
+        return li;
+    }
 };
 
 int main()
 {
-    vector<int> arr = {1, 2, 1};
+    vector<int> arr = {5, 10, -5};
 
     Solution obj;
-    vector<int> res = obj.nextGreaterElements(arr);
+    vector<int> res = obj.asteroidCollision(arr);
 
     for (auto it : res)
     {
