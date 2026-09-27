@@ -31,14 +31,40 @@ public:
         }
         return ans;
     }
+
+    // Leetcode 503. Next Greater Element II
+
+    vector<int> nextGreaterElements(vector<int> &nums)
+    {
+        // Hypothetically we double the array and taverse from the end, also preserving the order of monotonic stack.
+        int n = nums.size();
+        vector<int> ans(n);
+        stack<int> st;
+        // Loop twice the size of the array backwards to handle the circular property
+        for (int i = 2 * n - 1; i >= 0; i--)
+        {
+            // Maintain a monotonic decreasing stack (top of stack is the smallest)
+            while (!st.empty() && st.top() <= nums[i % n])
+            {
+                st.pop();
+            }
+            // Only store results when we are in the first pass range (actual indices)
+            if (i < n)
+            {
+                ans[i] = st.empty() ? -1 : st.top();
+            }
+            st.push(nums[i % n]);
+        }
+        return ans;
+    }
 };
 
 int main()
 {
-    vector<int> arr = {1, 3, 2, 4};
+    vector<int> arr = {1, 2, 1};
 
     Solution obj;
-    vector<int> res = obj.nextGreaterElement(arr);
+    vector<int> res = obj.nextGreaterElements(arr);
 
     for (auto it : res)
     {
