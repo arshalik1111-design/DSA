@@ -131,7 +131,6 @@ public:
         }
         return nextLessOrEqual;
     }
-
     int sumSubarrayMins(vector<int> &arr)
     {
         int n = arr.size();
@@ -151,6 +150,61 @@ public:
         }
         return answer;
     }
+
+    // Sum of Subarray Maximums
+    vector<int> PGE(vector<int> &arr)
+    {
+        int n = arr.size();
+        vector<int> previousMax(n, -1);
+        stack<int> st;
+
+        for (int i = 0; i < n; i++)
+        {
+            while (!st.empty() && arr[st.top()] <= arr[i])
+            {
+                st.pop();
+            }
+            previousMax[i] = !st.empty() ? st.top() : -1;
+            st.push(i);
+        }
+        return previousMax;
+    }
+    vector<int> NGEE(vector<int> &arr)
+    {
+        int n = arr.size();
+        vector<int> nextMaxOrEqual(n, n);
+        stack<int> st;
+
+        for (int i = n - 1; i >= 0; i--)
+        { // Remove values that are strictly greater
+            while (!st.empty() && arr[st.top()] < arr[i])
+            {
+                st.pop();
+            }
+            nextMaxOrEqual[i] = !st.empty() ? st.top() : n;
+            st.push(i);
+        }
+        return nextMaxOrEqual;
+    }
+    int sumSubarrayMax(vector<int> &arr)
+    {
+        int n = arr.size();
+        long long mod = 1e9 + 7;
+        vector<int> previousMax = PGE(arr);
+        vector<int> nextMaxOrEqual = NGEE(arr);
+        long long answer = 0;
+        for (int i = 0; i < n; i++)
+        {
+            int leftChoices = i - previousMax[i];
+            int rightChoices = nextMaxOrEqual[i] - i;
+
+            long long contributions = (arr[i] * leftChoices) % mod;
+            contributions = (contributions * rightChoices) % mod;
+
+            answer = (answer + contributions) % mod;
+        }
+        return answer;
+    }
 };
 
 int main()
@@ -158,7 +212,7 @@ int main()
     vector<int> arr = {3, 1, 2, 4};
 
     OptimalSolution obj;
-    int res = obj.sumSubarrayMins(arr);
+    int res = obj.sumSubarrayMax(arr);
     cout << res;
     // for (auto it : res)
     // {
