@@ -134,7 +134,6 @@ public:
     int sumSubarrayMins(vector<int> &arr)
     {
         int n = arr.size();
-        long long mod = 1e9 + 7;
         vector<int> previousLess = PSE(arr);
         vector<int> nextLessOrEqual = NSEE(arr);
         long long answer = 0;
@@ -143,10 +142,8 @@ public:
             int leftChoices = i - previousLess[i];
             int rightChoices = nextLessOrEqual[i] - i;
 
-            long long contributions = (arr[i] * leftChoices) % mod;
-            contributions = (contributions * rightChoices) % mod;
-
-            answer = (answer + contributions) % mod;
+            long long contributions = (arr[i] * leftChoices * rightChoices);
+            answer = (answer + contributions);
         }
         return answer;
     }
@@ -186,10 +183,9 @@ public:
         }
         return nextMaxOrEqual;
     }
-    int sumSubarrayMax(vector<int> &arr)
+    int sumSubarrayMaxs(vector<int> &arr)
     {
         int n = arr.size();
-        long long mod = 1e9 + 7;
         vector<int> previousMax = PGE(arr);
         vector<int> nextMaxOrEqual = NGEE(arr);
         long long answer = 0;
@@ -198,21 +194,26 @@ public:
             int leftChoices = i - previousMax[i];
             int rightChoices = nextMaxOrEqual[i] - i;
 
-            long long contributions = (arr[i] * leftChoices) % mod;
-            contributions = (contributions * rightChoices) % mod;
-
-            answer = (answer + contributions) % mod;
+            long long contributions = (arr[i] * leftChoices * rightChoices);
+            answer = (answer + contributions);
         }
         return answer;
+    }
+
+    // Leetcode 2104. Sum of Subarray Ranges
+    long long subArrayRanges(vector<int> &arr)
+    {
+        // Return maximum contribution minus minimum contribution.
+        return sumSubarrayMaxs(arr) - sumSubarrayMins(arr);
     }
 };
 
 int main()
 {
-    vector<int> arr = {3, 1, 2, 4};
+    vector<int> arr = {1, 2, 3};
 
     OptimalSolution obj;
-    int res = obj.sumSubarrayMax(arr);
+    int res = obj.subArrayRanges(arr);
     cout << res;
     // for (auto it : res)
     // {
