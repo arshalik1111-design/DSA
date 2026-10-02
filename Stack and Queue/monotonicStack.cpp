@@ -1,9 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution
+class BruteForce
+{
+};
+class OptimalSolution
 {
 
+private:
 public:
     vector<int> nextGreaterElement(vector<int> nums)
     {
@@ -89,17 +93,75 @@ public:
         }
         return li;
     }
+
+    // Leetcode 907. Sum of Subarray Minimums
+
+    // Find Previously smaller element for all indices
+    vector<int> PSE(vector<int> &arr)
+    {
+        int n = arr.size();
+        vector<int> previousLess(n, -1);
+        stack<int> st;
+
+        for (int i = 0; i < n; i++)
+        {
+            while (!st.empty() && arr[st.top()] >= arr[i])
+            {
+                st.pop();
+            }
+            previousLess[i] = !st.empty() ? st.top() : -1;
+            st.push(i);
+        }
+        return previousLess;
+    }
+    vector<int> NSEE(vector<int> &arr)
+    {
+        int n = arr.size();
+        vector<int> nextLessOrEqual(n, n);
+        stack<int> st;
+
+        for (int i = n - 1; i >= 0; i--)
+        { // Remove values that are strictly greater
+            while (!st.empty() && arr[st.top()] > arr[i])
+            {
+                st.pop();
+            }
+            nextLessOrEqual[i] = !st.empty() ? st.top() : n;
+            st.push(i);
+        }
+        return nextLessOrEqual;
+    }
+
+    int sumSubarrayMins(vector<int> &arr)
+    {
+        int n = arr.size();
+        long long mod = 1e9 + 7;
+        vector<int> previousLess = PSE(arr);
+        vector<int> nextLessOrEqual = NSEE(arr);
+        long long answer = 0;
+        for (int i = 0; i < n; i++)
+        {
+            int leftChoices = i - previousLess[i];
+            int rightChoices = nextLessOrEqual[i] - i;
+
+            long long contributions = (arr[i] * leftChoices) % mod;
+            contributions = (contributions * rightChoices) % mod;
+
+            answer = (answer + contributions) % mod;
+        }
+        return answer;
+    }
 };
 
 int main()
 {
-    vector<int> arr = {5, 10, -5};
+    vector<int> arr = {3, 1, 2, 4};
 
-    Solution obj;
-    vector<int> res = obj.asteroidCollision(arr);
-
-    for (auto it : res)
-    {
-        cout << it;
-    }
+    OptimalSolution obj;
+    int res = obj.sumSubarrayMins(arr);
+    cout << res;
+    // for (auto it : res)
+    // {
+    //     cout << it;
+    // }
 }
