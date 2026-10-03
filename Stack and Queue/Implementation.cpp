@@ -122,6 +122,47 @@ public:
     bool isEmpty() { return currSize == 0; }
 };
 
+class MinStack
+{
+
+private:
+    stack<pair<int, int>> st;
+
+public:
+    MinStack()
+    {
+        stack<pair<int, int>> st;
+    }
+
+    void push(int value)
+    {
+
+        if (st.empty())
+        {
+            st.push({value, value});
+        }
+        else
+        {
+            st.push({value, min(st.top().second, value)});
+        }
+    }
+
+    void pop()
+    {
+        st.pop();
+    }
+
+    int top()
+    {
+        st.top().first;
+    }
+
+    int getMin()
+    {
+        st.top().second;
+    }
+};
+
 class Solution
 {
 
