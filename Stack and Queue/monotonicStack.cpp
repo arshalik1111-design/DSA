@@ -206,14 +206,66 @@ public:
         // Return maximum contribution minus minimum contribution.
         return sumSubarrayMaxs(arr) - sumSubarrayMins(arr);
     }
+
+    // Leetcode 402. Remove K Digits
+    string removeKdigits(string num, int k)
+    {
+        int n = num.length();
+
+        // Edge Cases:
+        // 1. if all elements removed return zero.
+        // 2. if string nums are already sorted, remove last k digits.
+        // 3. remove leading zeroes
+        stack<char> st;
+
+        for (int i = 0; i < n; i++)
+        {
+            while (!st.empty() && k > 0 && st.top() > num[i])
+            {
+                st.pop();
+                k--;
+            }
+            st.push(num[i]);
+        }
+        string res = "";
+
+        // Edge Case 2. if string nums are already sorted, remove last k digits.
+        while (k > 0)
+        {
+            st.pop();
+            k--;
+        }
+
+        if (st.empty())
+            return "0";
+
+        // Store elements from stack into result string
+        while (!st.empty())
+        {
+            res = res + st.top();
+            st.pop();
+        }
+        // Remove leading zeroes
+        while (res.size() != 0 && res.back() == '0')
+        {
+            res.pop_back();
+        }
+
+        reverse(res.begin(), res.end());
+        if (res.empty())
+            return "0";
+
+        return res;
+    }
 };
 
 int main()
 {
     vector<int> arr = {1, 2, 3};
-
+    string num = "1432219";
+    int k = 3;
     OptimalSolution obj;
-    int res = obj.subArrayRanges(arr);
+    string res = obj.removeKdigits(num, k);
     cout << res;
     // for (auto it : res)
     // {
