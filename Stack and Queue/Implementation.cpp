@@ -129,11 +129,6 @@ private:
     stack<pair<int, int>> st;
 
 public:
-    MinStack()
-    {
-        stack<pair<int, int>> st;
-    }
-
     void push(int value)
     {
 
