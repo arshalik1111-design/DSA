@@ -50,17 +50,61 @@ public:
         }
         return list;
     }
+
+    // Leetcode 42. Trapping Rain Water
+
+    vector<int> prefixMax(vector<int> &arr)
+    {
+        int n = arr.size();
+        vector<int> prefix(n);
+        prefix[0] = arr[0];
+        // start from one as we already stored first element as prefixMax
+        for (int i = 1; i < n; i++)
+        {
+            prefix[i] = max(prefix[i - 1], arr[i]);
+        }
+        return prefix;
+    }
+    vector<int> suffixMax(vector<int> &arr)
+    {
+        int n = arr.size();
+        vector<int> suffix(n);
+        suffix[n - 1] = arr[n - 1];
+        // start from one as we already stored first element as suffixMax
+        for (int i = n - 2; i >= 0; i--)
+        {
+            suffix[i] = max(suffix[i + 1], arr[i]);
+        }
+        return suffix;
+    }
+    int trap(vector<int> &height)
+    {
+        int n = height.size();
+        int total = 0;
+        vector<int> getLeftMax = prefixMax(height);
+        vector<int> getRightMax = suffixMax(height);
+        for (int i = 0; i < n; i++)
+        {
+            int leftMax = getLeftMax[i];
+            int rightMax = getRightMax[i];
+
+            total += (min(leftMax, rightMax) - height[i]);
+        }
+        return total;
+    }
 };
 
 int main()
 {
-    vector<int> nums = {1, 3, 1, 2, 0, 5};
+    // vector<int> nums = {1, 3, 1, 2, 0, 5};
+    vector<int> height = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
     int k = 3;
     Optimal sol;
 
-    vector<int> res = sol.maxSlidingWindow(nums, k);
-    for (auto it : res)
-    {
-        cout << it << " ";
-    }
+    int res = sol.trap(height);
+    cout << res;
+    // for (auto it : res)
+    // {
+    //     cout << it << " ";
+    // }
 }
