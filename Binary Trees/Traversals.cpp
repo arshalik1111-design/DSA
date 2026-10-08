@@ -109,6 +109,65 @@ public:
         }
         return preOrder;
     }
+
+    vector<int> postOrderTraversal(TreeNode *root)
+    {
+        stack<TreeNode *> st;
+        vector<int> postOrder;
+        if (!root)
+            return postOrder;
+        TreeNode *node = root;
+        st.push(node);
+        while (!st.empty())
+        {
+            node = st.top();
+            st.pop();
+            postOrder.push_back(node->data);
+            if (node->left)
+            {
+                st.push(node->left);
+            }
+            if (node->right)
+            {
+                st.push(node->right);
+            }
+        }
+        vector<int> res(rbegin(postOrder), rend(postOrder));
+        return res;
+    }
+
+    vector<int> postOrderUsingTwoStacks(TreeNode *root)
+    {
+        stack<TreeNode *> st1;
+        stack<TreeNode *> st2;
+        vector<int> postOrder;
+        if (!root)
+            return postOrder;
+        TreeNode *node = root;
+        st1.push(node);
+        while (!st1.empty())
+        {
+            node = st1.top();
+            st1.pop();
+            st2.push(node);
+
+            if (node->left)
+            {
+                st1.push(node->left);
+            }
+            if (node->right)
+            {
+                st1.push(node->right);
+            }
+        }
+        vector<int> res;
+        while (!st2.empty())
+        {
+            res.push_back(st2.top()->data);
+            st2.pop();
+        }
+        return res;
+    }
 };
 
 int main()
@@ -120,7 +179,7 @@ int main()
     root->left->right = new TreeNode(5);
     vector<int> ans;
     IterativeApproach sol;
-    vector<int> res = sol.preOrderTraversal(root);
+    vector<int> res = sol.postOrderUsingTwoStacks(root);
 
     for (auto &it : res)
     {
