@@ -17,7 +17,6 @@ struct TreeNode
 
 class RecursiveApproach
 {
-
 public:
     // Inorder: left root right
     void inOrderHelper(TreeNode *root, vector<int> &ans)
@@ -35,6 +34,23 @@ public:
     {
         vector<int> ans;
         inOrderHelper(root, ans);
+        return ans;
+    }
+
+    // PreOrder: Root Left Right
+    void preOrderHelper(TreeNode *root, vector<int> &ans)
+    {
+        if (root == NULL)
+            return;
+        ans.push_back(root->data);
+        preOrderHelper(root->left, ans);
+        preOrderHelper(root->right, ans);
+    }
+
+    vector<int> preOrderTraversal(TreeNode *root)
+    {
+        vector<int> ans;
+        preOrderHelper(root, ans);
         return ans;
     }
 };
@@ -68,6 +84,31 @@ public:
         }
         return inOrder;
     }
+
+    vector<int> preOrderTraversal(TreeNode *root)
+    {
+        stack<TreeNode *> st;
+        vector<int> preOrder;
+        if (!root)
+            return preOrder;
+        TreeNode *node = root;
+        st.push(node);
+        while (!st.empty())
+        {
+            node = st.top();
+            st.pop();
+            preOrder.push_back(node->data);
+            if (node->right)
+            {
+                st.push(node->right);
+            }
+            if (node->left)
+            {
+                st.push(node->left);
+            }
+        }
+        return preOrder;
+    }
 };
 
 int main()
@@ -78,8 +119,8 @@ int main()
     root->left->left = new TreeNode(4);
     root->left->right = new TreeNode(5);
     vector<int> ans;
-    RecursiveApproach sol;
-    vector<int> res = sol.inOrderTraversal(root);
+    IterativeApproach sol;
+    vector<int> res = sol.preOrderTraversal(root);
 
     for (auto &it : res)
     {
