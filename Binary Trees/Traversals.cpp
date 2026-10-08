@@ -110,6 +110,8 @@ public:
         return preOrder;
     }
 
+    // Post order traversal using single stack appraoch
+
     vector<int> postOrderTraversal(TreeNode *root)
     {
         stack<TreeNode *> st;
@@ -136,6 +138,7 @@ public:
         return res;
     }
 
+    // Post order traversal using two stacks appraoch
     vector<int> postOrderUsingTwoStacks(TreeNode *root)
     {
         stack<TreeNode *> st1;
@@ -168,6 +171,33 @@ public:
         }
         return res;
     }
+
+    vector<vector<int>> levelOrderTraversal(TreeNode *root)
+    {
+        vector<vector<int>> levelOrder;
+        if (!root)
+            return levelOrder;
+        queue<TreeNode *> q;
+        TreeNode *node = root;
+        q.push(node);
+        while (!q.empty())
+        {
+            int levelSize = q.size();
+            vector<int> currentLevel;
+            for (int i = 0; i < levelSize; i++)
+            {
+                node = q.front();
+                q.pop();
+                currentLevel.push_back(node->data);
+                if (node->left)
+                    q.push(node->left);
+                if (node->right)
+                    q.push(node->right);
+            }
+            levelOrder.push_back(currentLevel);
+        }
+        return levelOrder;
+    }
 };
 
 int main()
@@ -179,10 +209,15 @@ int main()
     root->left->right = new TreeNode(5);
     vector<int> ans;
     IterativeApproach sol;
-    vector<int> res = sol.postOrderUsingTwoStacks(root);
+    vector<vector<int>> res = sol.levelOrderTraversal(root);
 
-    for (auto &it : res)
+    for (const auto &level : res)
     {
-        cout << it << " ";
+        cout << "[ ";
+        for (int val : level)
+        {
+            cout << val << " ";
+        }
+        cout << "]\n";
     }
 }
