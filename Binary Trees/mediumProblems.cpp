@@ -64,6 +64,25 @@ public:
 
         return cnt;
     }
+
+    // Leetcode 110. Balanced Binary Tree
+    bool isBalanced(TreeNode *root)
+    {
+        // we make a tweak in the code of finding the height of the tree
+
+        if (!root)
+            return 0;
+        int left = isBalanced(root->left);
+        if (left == -1)
+            return -1;
+        int right = isBalanced(root->right);
+        if (right == -1)
+            return -1;
+
+        if (abs(left - right) > 1)
+            return -1;
+        return max(left, right) + 1;
+    }
 };
 
 int main()
@@ -75,7 +94,7 @@ int main()
     root->left->right = new TreeNode(5);
     vector<int> ans;
     Solution sol;
-    int res = sol.maxDepthUsingBFS(root);
+    bool res = sol.isBalanced(root);
     cout << res;
     // for (const auto &level : res)
     // {
