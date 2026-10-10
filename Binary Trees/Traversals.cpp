@@ -198,6 +198,47 @@ public:
         }
         return levelOrder;
     }
+
+    vector<vector<int>> preInPostTraversal(TreeNode *root)
+    {
+        vector<int> pre, in, post;
+        stack<pair<TreeNode *, int>> st;
+        if (!root)
+            return {in, pre, post};
+        st.push({root, 1});
+
+        while (!st.empty())
+        {
+            auto &it = st.top();
+            if (it.second == 1)
+            {
+                pre.push_back(it.first->data);
+                it.second++;
+                if (it.first->left)
+                {
+
+                    st.push({it.first->left, 1});
+                }
+            }
+            else if (it.second == 2)
+            {
+                in.push_back(it.first->data);
+                it.second++;
+                if (it.first->right)
+                {
+
+                    st.push({it.first->right, 1});
+                }
+            }
+            else
+            {
+                post.push_back(it.first->data);
+                st.pop();
+            }
+        }
+
+        return {in, pre, post};
+    }
 };
 
 int main()
@@ -209,7 +250,7 @@ int main()
     root->left->right = new TreeNode(5);
     vector<int> ans;
     IterativeApproach sol;
-    vector<vector<int>> res = sol.levelOrderTraversal(root);
+    vector<vector<int>> res = sol.preInPostTraversal(root);
 
     for (const auto &level : res)
     {
