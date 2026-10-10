@@ -69,6 +69,7 @@ public:
     bool isBalanced(TreeNode *root)
     {
         // we make a tweak in the code of finding the height of the tree
+        // if any height (left or right) returns -1, it means the tree is unbalanced and we stop checking
 
         if (!root)
             return 0;
