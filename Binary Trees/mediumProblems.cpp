@@ -84,18 +84,36 @@ public:
             return -1;
         return max(left, right) + 1;
     }
+
+    int maxi = 0;
+    int checkHeight(TreeNode *root)
+    {
+        if (!root)
+            return 0;
+        int lh = checkHeight(root->left);
+        int rh = checkHeight(root->right);
+        maxi = max(maxi, lh + rh);
+
+        return 1 + max(lh, rh);
+    }
+    int diameterOfBinaryTree(TreeNode *root)
+    {
+        maxi = 0;
+        checkHeight(root);
+        return maxi;
+    }
 };
 
 int main()
 {
     TreeNode *root = new TreeNode(1);
     root->left = new TreeNode(2);
-    root->right = new TreeNode(3);
-    root->left->left = new TreeNode(4);
-    root->left->right = new TreeNode(5);
+    // root->right = new TreeNode(3);
+    // root->left->left = new TreeNode(4);
+    // root->left->right = new TreeNode(5);
     vector<int> ans;
     Solution sol;
-    bool res = sol.isBalanced(root);
+    int res = sol.diameterOfBinaryTree(root);
     cout << res;
     // for (const auto &level : res)
     // {
