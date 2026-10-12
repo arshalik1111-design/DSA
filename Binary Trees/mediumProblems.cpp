@@ -122,18 +122,42 @@ public:
         findMax(root);
         return maxi;
     }
+
+    // Leetcode 101. Symmetric Tree
+
+    bool isSymmetricHelp(TreeNode *left, TreeNode *right)
+    {
+        if (left == nullptr && right == nullptr)
+        {
+            return true;
+        }
+        if (left == nullptr || right == nullptr)
+        {
+            return false;
+        }
+
+        if (left->data != right->data)
+            return false;
+        return isSymmetricHelp(left->left, right->right) && isSymmetricHelp(left->right, right->left);
+    }
+    bool isSymmetric(TreeNode *root)
+    {
+        if (!root)
+            return true;
+        return isSymmetricHelp(root->left, root->right);
+    }
 };
 
 int main()
 {
     TreeNode *root = new TreeNode(1);
     root->left = new TreeNode(2);
-    root->right = new TreeNode(3);
+    root->right = new TreeNode(2);
     // root->left->left = new TreeNode(4);
     // root->left->right = new TreeNode(5);
     vector<int> ans;
     Solution sol;
-    int res = sol.maxPathSum(root);
+    int res = sol.isSymmetric(root);
     cout << res;
     // for (const auto &level : res)
     // {
