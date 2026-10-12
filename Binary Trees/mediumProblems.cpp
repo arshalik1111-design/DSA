@@ -102,18 +102,38 @@ public:
         checkHeight(root);
         return maxi;
     }
+
+    // Leetcode 124. Binary Tree Maximum Path Sum
+
+    int findMax(TreeNode *root)
+    {
+        if (!root)
+            return 0;
+
+        int lh = findMax(root->left);
+        int rh = findMax(root->right);
+
+        maxi = max(maxi, root->data + lh + rh);
+        return root->data + max(lh, rh);
+    }
+    int maxPathSum(TreeNode *root)
+    {
+        maxi = INT_MIN;
+        findMax(root);
+        return maxi;
+    }
 };
 
 int main()
 {
     TreeNode *root = new TreeNode(1);
     root->left = new TreeNode(2);
-    // root->right = new TreeNode(3);
+    root->right = new TreeNode(3);
     // root->left->left = new TreeNode(4);
     // root->left->right = new TreeNode(5);
     vector<int> ans;
     Solution sol;
-    int res = sol.diameterOfBinaryTree(root);
+    int res = sol.maxPathSum(root);
     cout << res;
     // for (const auto &level : res)
     // {
