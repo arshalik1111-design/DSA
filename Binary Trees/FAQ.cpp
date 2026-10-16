@@ -2,13 +2,13 @@
 using namespace std;
 struct TreeNode
 {
-    int data;
+    int val;
     TreeNode *left;
     TreeNode *right;
 
-    TreeNode(int val)
+    TreeNode(int data)
     {
-        data = val;
+        val = data;
         left = NULL;
         right = NULL;
     }
@@ -38,7 +38,7 @@ public:
             {
                 node = q.front();
                 q.pop();
-                currLevel.push_back(node->data);
+                currLevel.push_back(node->val);
                 if (node->left)
                     q.push(node->left);
                 if (node->right)
@@ -58,6 +58,80 @@ public:
         }
         return ans;
     }
+
+    // Boundary Traversal of Binary Tree
+    bool isLeaf(TreeNode *root)
+    {
+        return (!root->left && !root->right);
+    }
+    void addLeft(TreeNode *root, vector<int> &res)
+    {
+        TreeNode *node = root->left;
+        while (node)
+        {
+            if (!isLeaf(node))
+                res.push_back(node->val);
+            if (node->left)
+            {
+                node = node->left;
+            }
+            else
+            {
+                node = node->right;
+            }
+        }
+    }
+
+    void addLeaves(TreeNode *root, vector<int> &res)
+    {
+        if (!root)
+            return;
+        if (isLeaf(root))
+        {
+            res.push_back(root->val);
+            return;
+        }
+
+        addLeaves(root->left, res);
+        addLeaves(root->right, res);
+    }
+    void addRight(TreeNode *root, vector<int> &res)
+    {
+        vector<int> temp;
+        TreeNode *node = root->right;
+
+        while (node)
+        {
+            if (!isLeaf(node))
+                temp.push_back(node->val);
+            if (node->right)
+            {
+                node = node->right;
+            }
+            else
+            {
+                node = node->left;
+            }
+        }
+        for (int i = temp.size() - 1; i >= 0; i--)
+        {
+            res.push_back(temp[i]);
+        }
+    }
+    vector<int> boundary(TreeNode *root)
+    {
+        vector<int> res;
+        if (!root)
+            return res;
+
+        if (!isLeaf(root))
+            res.push_back(root->val);
+        addLeft(root, res);
+        addLeaves(root, res);
+        addRight(root, res);
+
+        return res;
+    }
 };
 
 int main()
@@ -69,15 +143,20 @@ int main()
     root->left->right = new TreeNode(5);
     vector<int> ans;
     Solution sol;
-    vector<vector<int>> res = sol.zigzagLevelOrder(root);
+    vector<int> res = sol.boundary(root);
     // cout << res;
-    for (const auto &level : res)
+
+    for (auto &it : res)
     {
-        cout << "[ ";
-        for (int val : level)
-        {
-            cout << val << " ";
-        }
-        cout << "]\n";
+        cout << it << " ";
     }
+    // for (const auto &level : res)
+    // {
+    //     cout << "[ ";
+    //     for (int val : level)
+    //     {
+    //         cout << val << " ";
+    //     }
+    //     cout << "]\n";
+    // }
 }
