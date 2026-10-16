@@ -213,6 +213,41 @@ public:
 
         return ans;
     }
+
+    // Bottom view of Binary tree
+
+    vector<int> bottomView(TreeNode *root)
+    {
+        vector<int> ans;
+        if (!root)
+            return ans;
+        queue<pair<TreeNode *, int>> q;
+        map<int, int> mp;
+        q.push({root, 0});
+        while (!q.empty())
+        {
+            auto it = q.front();
+            q.pop();
+            TreeNode *node = it.first;
+            int line = it.second;
+            mp[line] = node->val;
+
+            if (node->left)
+            {
+                q.push({node->left, it.second - 1});
+            }
+            if (node->right)
+            {
+                q.push({node->right, it.second + 1});
+            }
+        }
+        for (auto &it : mp)
+        {
+            ans.push_back(it.second);
+        }
+
+        return ans;
+    }
 };
 
 int main()
@@ -224,7 +259,7 @@ int main()
     root->left->right = new TreeNode(5);
     vector<int> ans;
     Solution sol;
-    vector<int> res = sol.topView(root);
+    vector<int> res = sol.bottomView(root);
     // cout << res;
 
     for (auto &it : res)
