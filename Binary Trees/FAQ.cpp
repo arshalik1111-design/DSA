@@ -248,6 +248,28 @@ public:
 
         return ans;
     }
+
+    // Leetcode 199. Binary Tree Right Side View
+
+    vector<int> rightSideViewHelper(TreeNode *root, vector<int> &ans, int level)
+    {
+        if (!root)
+            return {};
+
+        if (level == ans.size())
+        {
+            ans.push_back(root->val);
+        }
+        rightSideViewHelper(root->right, ans, level + 1);
+        rightSideViewHelper(root->left, ans, level + 1);
+    }
+
+    vector<int> rightSideView(TreeNode *root)
+    {
+        vector<int> ans;
+        rightSideViewHelper(root, ans, 0);
+        return ans;
+    }
 };
 
 int main()
@@ -259,7 +281,7 @@ int main()
     root->left->right = new TreeNode(5);
     vector<int> ans;
     Solution sol;
-    vector<int> res = sol.bottomView(root);
+    vector<int> res = sol.rightSideView(root);
     // cout << res;
 
     for (auto &it : res)
