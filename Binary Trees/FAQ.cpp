@@ -251,10 +251,10 @@ public:
 
     // Leetcode 199. Binary Tree Right Side View
 
-    vector<int> rightSideViewHelper(TreeNode *root, vector<int> &ans, int level)
+    void rightSideViewHelper(TreeNode *root, vector<int> &ans, int level)
     {
         if (!root)
-            return {};
+            return;
 
         if (level == ans.size())
         {
